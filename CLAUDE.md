@@ -203,14 +203,38 @@ Skills are specialized tools that augment Claude Code workflows. Load any skill 
     - Migrate between Claude model versions
   - **Use Case**: "Add prompt caching to our API calls", "Integrate Claude AI into the contact form backend"
 
+#### Design Intelligence (Installed)
+- **`ui-ux-pro-max`** — AI-powered design system generation and UX guidance
+  - **Installed**: Yes (in `.claude/skills/ui-ux-pro-max/`)
+  - **When**: You need to design UI components, choose color palettes, review UX issues, or build new pages
+  - **How**: Use Python design system generator to analyze requirements:
+    ```bash
+    python3 .claude/skills/ui-ux-pro-max/scripts/search.py "product_type style_keywords industry" --design-system -p "Project Name"
+    ```
+  - **Resources**:
+    - 67 UI styles (neumorphism, glassmorphism, minimalism, bento grid, brutalism, etc.)
+    - 96 color palettes with accessibility guidance
+    - 57 font pairings for typography matching
+    - 99 UX guidelines (accessibility, layout, animation, responsive)
+    - 25 chart types across 13 tech stacks (React, Next.js, Vue, Svelte, SwiftUI, Flutter, Tailwind, shadcn/ui, etc.)
+  - **Example**: `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dark neumorphic trading platform" --design-system -p "GCC"`
+  - **Output**: Complete design system with pattern recommendations, color palette, typography, effects, and anti-patterns to avoid
+  - **Use Case**: "Generate design system for contact form", "Review button styling against UX guidelines", "Choose color palette matching dark neumorphic aesthetic"
+
 ### Recommended Workflow for This Project
 
-1. **Start of session**: Confirm you understand the design system by reading CLAUDE.md
-2. **Before making changes**: Use `/skill simplify` on any refactoring
-3. **After changes**: Use `/skill security-review` for forms/API code, `/skill simplify` for all changes
-4. **Before pushing**: Use `/skill review` if creating a PR
-5. **Setup automation**: Use `/skill update-config` to auto-run `npm run lint` on commit
-6. **Reduce prompts**: Use `/skill fewer-permission-prompts` after your first session to whitelist safe operations
+1. **Start of session**: Read CLAUDE.md to understand neumorphic design system and current implementation
+2. **Design decisions**: Use UI/UX Pro Max for design system validation:
+   ```bash
+   python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dark neumorphic enterprise trading" --design-system -p "GCC"
+   ```
+3. **Before making changes**: Use `/skill simplify` on any refactoring or code consolidation
+4. **After changes**: 
+   - Use `/skill security-review` for forms, inputs, and API code
+   - Use `/skill simplify` for all code changes
+5. **Before pushing**: Use `/skill review` if creating a PR
+6. **Setup automation**: Use `/skill update-config` to auto-run `npm run lint` on commit
+7. **Reduce prompts**: Use `/skill fewer-permission-prompts` after implementation to whitelist safe operations
 
 ## Common Workflows
 
