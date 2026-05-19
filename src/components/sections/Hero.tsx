@@ -36,14 +36,16 @@ const stats = [
   { value: 30, suffix: '+', label: 'Years Operating', prefix: '' },
 ];
 
+const E = [0.22, 1, 0.36, 1] as const;
+
 const stagger = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+  show: { transition: { staggerChildren: 0.08, delayChildren: 0.15 } },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.72 } },
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: E } },
 };
 
 export default function Hero() {
@@ -70,9 +72,12 @@ export default function Hero() {
         initial="hidden"
         animate={visible ? 'show' : 'hidden'}
       >
-        <motion.p variants={fadeUp} style={s.eyebrow}>
-          EST. 1998 &nbsp;·&nbsp; NEW YORK &nbsp;·&nbsp; LONDON &nbsp;·&nbsp; SINGAPORE &nbsp;·&nbsp; DOHA
-        </motion.p>
+        <motion.div variants={fadeUp} style={{ display: 'flex', flexDirection: 'column', marginBottom: '1.5rem' }}>
+          <div style={{ width: '24px', height: '1px', background: '#38BDF8', marginBottom: '0.75rem', opacity: 0.8 }} />
+          <p style={s.eyebrow}>
+            EST. 1998 &nbsp;·&nbsp; NEW YORK &nbsp;·&nbsp; LONDON &nbsp;·&nbsp; SINGAPORE &nbsp;·&nbsp; DOHA
+          </p>
+        </motion.div>
 
         <motion.h1 variants={fadeUp} style={s.h1}>
           The Global Standard<br />
@@ -86,9 +91,11 @@ export default function Hero() {
         </motion.p>
 
         <motion.div variants={fadeUp} style={s.buttons}>
-          <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-            Schedule a Consultation <span className="arrow" />
-          </Link>
+          <motion.span whileHover={{ scale: 1.02 }} style={{ display: 'inline-flex' }}>
+            <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
+              Schedule a Consultation <span className="arrow" />
+            </Link>
+          </motion.span>
           <Link href="/services" className="ggc-btn on-dark sm" style={{ textDecoration: 'none' }}>
             Explore Services <span className="arrow" />
           </Link>
@@ -115,8 +122,9 @@ export default function Hero() {
         style={s.scrollCue}
         initial={{ opacity: 0 }}
         animate={{ opacity: visible ? 1 : 0 }}
-        transition={{ delay: 1.6 }}
+        transition={{ delay: 1.6, ease: E }}
       >
+        <span style={s.scrollLabel}>Scroll</span>
         <motion.div
           style={s.scrollLine}
           animate={{ scaleY: [1, 0.3, 1] }}
@@ -156,10 +164,10 @@ const s: Record<string, React.CSSProperties> = {
     textTransform: 'uppercase',
     color: 'rgba(56,189,248,0.8)',
     fontFamily: "'Montserrat', sans-serif",
-    marginBottom: '1.5rem',
+    marginBottom: 0,
   },
   h1: {
-    fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
+    fontSize: 'clamp(3rem, 6vw, 5.5rem)',
     fontWeight: 600,
     letterSpacing: '-0.03em',
     lineHeight: 1.1,
@@ -176,7 +184,7 @@ const s: Record<string, React.CSSProperties> = {
     fontSize: '0.9375rem',
     fontWeight: 400,
     lineHeight: 1.75,
-    color: 'rgba(250,250,250,0.52)',
+    color: 'rgba(250,250,250,0.5)',
     maxWidth: '520px',
     marginBottom: '2.5rem',
   },
@@ -213,13 +221,14 @@ const s: Record<string, React.CSSProperties> = {
     color: '#38BDF8',
     letterSpacing: '-0.025em',
     fontFamily: "'Montserrat', sans-serif",
+    fontVariantNumeric: 'tabular-nums',
   },
   statLabel: {
     fontSize: '0.6rem',
     fontWeight: 500,
     letterSpacing: '0.1em',
     textTransform: 'uppercase',
-    color: 'rgba(250,250,250,0.35)',
+    color: 'rgba(250,250,250,0.4)',
   },
   scrollCue: {
     position: 'absolute',
@@ -230,6 +239,15 @@ const s: Record<string, React.CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  scrollLabel: {
+    fontSize: '0.55rem',
+    fontWeight: 600,
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase',
+    color: 'rgba(250,250,250,0.4)',
+    fontFamily: "'Montserrat', sans-serif",
+    marginBottom: '0.5rem',
   },
   scrollLine: {
     width: '1px',

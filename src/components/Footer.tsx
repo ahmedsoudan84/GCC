@@ -56,9 +56,7 @@ export default function Footer() {
               <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {links.map((link) => (
                   <li key={link.label}>
-                    <Link href={link.href} style={{ fontSize: '0.8125rem', color: 'rgba(250,250,250,0.5)', textDecoration: 'none', transition: 'color 0.15s ease' }}
-                      onMouseOver={(e) => (e.currentTarget.style.color = 'var(--ivory-100)')}
-                      onMouseOut={(e) => (e.currentTarget.style.color = 'rgba(250,250,250,0.5)')}>
+                    <Link href={link.href} className="footer-link">
                       {link.label}
                     </Link>
                   </li>

@@ -31,14 +31,16 @@ const featured = [
   },
 ];
 
+const E = [0.22, 1, 0.36, 1] as const;
+
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
 const cardVariants = {
   hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: E } },
 };
 
 export default function Team() {
@@ -73,17 +75,25 @@ export default function Team() {
               variants={cardVariants}
               className="neu-card"
               style={{ padding: 0, overflow: 'hidden' }}
-              whileHover={{ y: -5, transition: { duration: 0.25 } }}
+              whileHover={{ y: -3, transition: { duration: 0.2, ease: 'easeOut' } }}
             >
               {/* Photo */}
-              <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden' }}>
+              <motion.div
+                style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden' }}
+                whileHover="imgHover"
+              >
+                <motion.div
+                  variants={{ imgHover: { scale: 1.05, transition: { duration: 0.5, ease: E } } }}
+                  style={{ position: 'absolute', inset: 0 }}
+                >
                 <Image
                   src={member.photo}
                   alt={member.name}
                   fill
-                  style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
+                  style={{ objectFit: 'cover' }}
                   sizes="(max-width: 640px) 100vw, (max-width: 900px) 50vw, 25vw"
                 />
+                </motion.div>
                 <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(11,20,55,0.88) 0%, transparent 55%)' }} />
                 <div style={{ position: 'absolute', bottom: '1rem', left: '1rem', right: '1rem' }}>
                   <p style={{ fontSize: '0.6rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--accent-600)', marginBottom: '0.2rem', fontFamily: 'var(--font-mono)' }}>
@@ -96,7 +106,7 @@ export default function Team() {
                     {member.title}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>
@@ -109,7 +119,7 @@ export default function Team() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Link href="/team" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-            Meet the Full Team <span className="arrow">→</span>
+            Meet the Full Team <span className="arrow" />
           </Link>
         </motion.div>
       </div>

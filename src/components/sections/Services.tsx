@@ -35,14 +35,16 @@ const services = [
   },
 ];
 
+const E = [0.22, 1, 0.36, 1] as const;
+
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.12 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
 const cardVariants = {
   hidden: { opacity: 0, y: 32 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: E } },
 };
 
 export default function Services() {
@@ -54,8 +56,8 @@ export default function Services() {
           style={{ marginBottom: '3.5rem' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: E }}
         >
           <p className="section-eyebrow">What We Do</p>
           <h2 className="section-headline">Six lines. One integrated group.</h2>
@@ -81,7 +83,7 @@ export default function Services() {
                 key={service.title}
                 variants={cardVariants}
                 className="neu-card"
-                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                whileHover={{ y: -3, transition: { duration: 0.2, ease: 'easeOut' } }}
                 style={{ cursor: 'default' }}
               >
                 {/* Icon */}
@@ -97,7 +99,7 @@ export default function Services() {
                     marginBottom: '1.5rem',
                     boxShadow: '4px 4px 10px #070e28, -4px -4px 10px #0f1a46',
                   }}
-                  whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.4 } }}
+                  whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.35 } }}
                 >
                   <Icon size={22} style={{ color: 'var(--accent-600)' }} />
                 </motion.div>
@@ -111,10 +113,10 @@ export default function Services() {
 
                 {/* Stat */}
                 <div style={{ borderTop: '1px solid rgba(83,97,232,0.15)', paddingTop: '1rem' }}>
-                  <span style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--accent-600)', letterSpacing: '-0.02em', display: 'block' }}>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--accent-600)', letterSpacing: '-0.02em', display: 'block', fontVariantNumeric: 'tabular-nums' }}>
                     {service.stat}
                   </span>
-                  <span style={{ fontSize: '0.6875rem', color: 'rgba(250,250,250,0.35)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '0.6875rem', color: 'rgba(250,250,250,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
                     {service.statLabel}
                   </span>
                 </div>
@@ -132,7 +134,7 @@ export default function Services() {
           transition={{ duration: 0.5, delay: 0.3 }}
         >
           <Link href="/services" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-            View All Services <span className="arrow">→</span>
+            View All Services <span className="arrow" />
           </Link>
         </motion.div>
       </div>

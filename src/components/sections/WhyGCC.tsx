@@ -27,14 +27,16 @@ const pillars = [
   },
 ];
 
+const E = [0.22, 1, 0.36, 1] as const;
+
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, x: -20 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: E } },
 };
 
 export default function WhyGCC() {
@@ -45,10 +47,10 @@ export default function WhyGCC() {
 
           {/* Left – image + stat callouts */}
           <motion.div
-            initial={{ opacity: 0, x: -24 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.7, ease: E }}
           >
             <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', aspectRatio: '3/4', boxShadow: '12px 12px 30px #060c22, -12px -12px 30px #111c50', marginBottom: '2rem' }}>
               <Image
@@ -73,9 +75,9 @@ export default function WhyGCC() {
                   key={stat.label}
                   className="neu-card"
                   style={{ padding: '1.25rem', textAlign: 'center' }}
-                  whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                  whileHover={{ scale: 1.02, transition: { duration: 0.2 } }}
                 >
-                  <div style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--accent-600)', letterSpacing: '-0.02em', marginBottom: '0.25rem' }}>
+                  <div style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--accent-600)', letterSpacing: '-0.02em', marginBottom: '0.25rem', fontVariantNumeric: 'tabular-nums' }}>
                     {stat.value}
                   </div>
                   <div style={{ fontSize: '0.6875rem', color: 'rgba(250,250,250,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
@@ -91,8 +93,8 @@ export default function WhyGCC() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, ease: E }}
               style={{ marginBottom: '2.5rem' }}
             >
               <p className="section-eyebrow">Why GGC</p>
@@ -116,7 +118,7 @@ export default function WhyGCC() {
                   variants={itemVariants}
                   className="neu-card"
                   style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start', padding: '1.5rem' }}
-                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                  whileHover={{ y: -2, scale: 1.01, transition: { duration: 0.2 } }}
                 >
                   <span style={{ fontSize: '0.6875rem', fontWeight: 700, color: 'var(--accent-600)', letterSpacing: '0.05em', fontFamily: 'var(--font-mono)', flexShrink: 0, paddingTop: '0.15rem' }}>
                     {pillar.number}
@@ -141,7 +143,7 @@ export default function WhyGCC() {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               <Link href="/about" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-                About GGC <span className="arrow">→</span>
+                About GGC <span className="arrow" />
               </Link>
             </motion.div>
           </div>

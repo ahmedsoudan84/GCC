@@ -16,7 +16,7 @@ body {
   color: var(--ink-primary);
   font-family: 'Montserrat', sans-serif;
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: 1.7;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
@@ -51,37 +51,14 @@ a { text-decoration: none; color: inherit; transition: opacity 0.18s ease; }
 ::-webkit-scrollbar-thumb { background: #1D2663; border-radius: 6px; }
 ::-webkit-scrollbar-thumb:hover { background: #262F79; }
 
-/* ── Neumorphic card utility ────────────────── */
-.neu {
-  background: var(--bg-primary);
-  border-radius: 16px;
-  box-shadow:
-    10px 10px 24px #070d24,
-    -10px -10px 24px #0f1a4a;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.neu:hover {
-  box-shadow:
-    14px 14px 32px #060c20,
-    -14px -14px 32px #111c52;
-  transform: translateY(-3px);
-}
-
-.neu-sm {
-  background: var(--bg-primary);
-  border-radius: 12px;
-  box-shadow:
-    6px 6px 14px #070d24,
-    -6px -6px 14px #0f1a4a;
-}
-
-.neu-inset {
-  background: var(--bg-primary);
-  border-radius: 10px;
-  box-shadow:
-    inset 5px 5px 12px #070d24,
-    inset -5px -5px 12px #0f1a4a;
+/* ── Reduced motion ─────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* ── Utility ──────────────────────────────── */
