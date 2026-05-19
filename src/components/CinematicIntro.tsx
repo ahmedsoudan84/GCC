@@ -276,7 +276,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <Image
-              src="/logo.jpeg"
+              src="/GDC_Logo_White.png"
               alt="Global Group Corp."
               width={220}
               height={70}
@@ -331,8 +331,6 @@ const styles: Record<string, React.CSSProperties> = {
     gap: '0.75rem',
   },
   logoImage: {
-    filter: 'invert(1)',
-    mixBlendMode: 'screen',
     width: 220,
     height: 'auto',
     objectFit: 'contain',

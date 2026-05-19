@@ -201,7 +201,7 @@ export default function TeamPage() {
                 Our logistics team has walked the warehouse floors. This operational depth is
                 what separates GGC from advisory-only competitors.
               </p>
-              <Link href="/contact" className="ggc-btn accent" style={{ textDecoration: 'none' }}>
+              <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
                 Work with Us <span className="arrow">→</span>
               </Link>
             </motion.div>

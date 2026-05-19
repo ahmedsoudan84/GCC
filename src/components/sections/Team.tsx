@@ -108,7 +108,7 @@ export default function Team() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Link href="/team" className="ggc-btn primary" style={{ textDecoration: 'none' }}>
+          <Link href="/team" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
             Meet the Full Team <span className="arrow">→</span>
           </Link>
         </motion.div>

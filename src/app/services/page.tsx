@@ -102,7 +102,7 @@ export default function ServicesPage() {
             Six integrated service lines, one point of accountability — built for enterprises
             that operate at the intersection of trade, logistics, and capital.
           </p>
-          <Link href="/contact" className="ggc-btn accent" style={{ textDecoration: 'none' }}>
+          <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
             Discuss Your Requirements <span className="arrow">→</span>
           </Link>
         </motion.div>
@@ -199,10 +199,10 @@ export default function ServicesPage() {
             Our advisors are available across time zones. Initial consultations are complimentary.
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link href="/contact" className="ggc-btn accent" style={{ textDecoration: 'none' }}>
+            <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
               Schedule a Consultation <span className="arrow">→</span>
             </Link>
-            <Link href="/team" className="ggc-btn primary" style={{ textDecoration: 'none' }}>
+            <Link href="/team" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
               Meet the Team
             </Link>
           </div>

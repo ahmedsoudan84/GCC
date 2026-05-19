@@ -131,7 +131,7 @@ export default function Services() {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <Link href="/services" className="ggc-btn primary" style={{ textDecoration: 'none' }}>
+          <Link href="/services" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
             View All Services <span className="arrow">→</span>
           </Link>
         </motion.div>

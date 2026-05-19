@@ -86,11 +86,11 @@ export default function Hero() {
         </motion.p>
 
         <motion.div variants={fadeUp} style={s.buttons}>
-          <Link href="/contact" style={s.btnPrimary}>
-            Schedule a Consultation
+          <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
+            Schedule a Consultation <span className="arrow" />
           </Link>
-          <Link href="/services" style={s.btnGhost}>
-            Explore Services <span style={{ marginLeft: '4px' }}>→</span>
+          <Link href="/services" className="ggc-btn on-dark sm" style={{ textDecoration: 'none' }}>
+            Explore Services <span className="arrow" />
           </Link>
         </motion.div>
 
@@ -186,35 +186,6 @@ const s: Record<string, React.CSSProperties> = {
     flexWrap: 'wrap',
     marginBottom: '3rem',
     alignItems: 'center',
-  },
-  btnPrimary: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: '0.8rem 1.875rem',
-    background: '#38BDF8',
-    color: '#0B1437',
-    borderRadius: '6px',
-    fontSize: '0.875rem',
-    fontWeight: 700,
-    letterSpacing: '0.01em',
-    textDecoration: 'none',
-    fontFamily: "'Montserrat', sans-serif",
-    transition: 'background 0.18s ease, transform 0.15s ease',
-  },
-  btnGhost: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    padding: '0.8rem 1.875rem',
-    background: 'transparent',
-    color: 'rgba(250,250,250,0.7)',
-    border: '1px solid rgba(250,250,250,0.15)',
-    borderRadius: '6px',
-    fontSize: '0.875rem',
-    fontWeight: 500,
-    letterSpacing: '0.01em',
-    textDecoration: 'none',
-    fontFamily: "'Montserrat', sans-serif",
-    transition: 'border-color 0.18s ease, color 0.18s ease',
   },
   statsWrap: {
     display: 'flex',

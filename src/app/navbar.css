@@ -52,9 +52,6 @@
   height: auto;
   display: block;
   object-fit: contain;
-  /* Removes white background, renders logo white on dark */
-  filter: invert(1);
-  mix-blend-mode: screen;
   transition: transform 0.25s ease, opacity 0.25s ease;
 }
 
@@ -115,30 +112,48 @@
   right: 0;
 }
 
-/* ── CTA button ─────────────────────────────── */
+/* ── CTA button — neumorphic on-dark pillow ─── */
 .nav-cta {
-  font-size: 0.75rem;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  color: var(--ink-900);
-  background: var(--accent-600);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #e6eaf2;
+  background: #14224d;
   border: none;
-  border-radius: 5px;
-  padding: 0.5rem 1.25rem;
+  border-radius: 12px;
+  padding: 10px 20px;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.15s ease;
   white-space: nowrap;
   font-family: var(--font-display);
+  display: inline-flex;
+  align-items: center;
+  box-shadow:
+    -5px -5px 12px rgba(95, 110, 160, 0.18),
+     7px  7px 16px rgba(0, 0, 0, 0.5),
+    inset 1px 1px 1px rgba(95, 110, 160, 0.4),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.4);
+  transition:
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 120ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .nav-cta:hover {
-  background: #7dd3fc;
-  transform: translateY(-1px);
+  color: #38bdf8;
+  box-shadow:
+    -7px -7px 18px rgba(95, 110, 160, 0.22),
+    10px 10px 22px rgba(0, 0, 0, 0.6),
+    inset 1px 1px 1px rgba(95, 110, 160, 0.4),
+    inset -1px -1px 1px rgba(0, 0, 0, 0.4);
 }
 
 .nav-cta:active {
-  transform: translateY(0);
+  box-shadow:
+    inset  4px  4px 8px rgba(0, 0, 0, 0.55),
+    inset -3px -3px 6px rgba(95, 110, 160, 0.2);
+  transform: none;
 }
 
 /* ── Mobile toggle ─────────────────────────── */

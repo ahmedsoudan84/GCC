@@ -161,7 +161,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <button type="submit" className="ggc-btn accent" style={{ alignSelf: 'flex-start' }}>
+                  <button type="submit" className="ggc-btn on-dark" style={{ alignSelf: 'flex-start' }}>
                     Send Message <span className="arrow">→</span>
                   </button>
                 </form>

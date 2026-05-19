@@ -140,7 +140,7 @@ export default function WhyGCC() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.4 }}
             >
-              <Link href="/about" className="ggc-btn primary" style={{ textDecoration: 'none' }}>
+              <Link href="/about" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
                 About GGC <span className="arrow">→</span>
               </Link>
             </motion.div>
