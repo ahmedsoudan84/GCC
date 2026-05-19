@@ -276,7 +276,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
           >
             <Image
-              src="/GDC_Logo_White.png"
+              src="/GCC Light (1).png"
               alt="Global Group Corp."
               width={220}
               height={70}

@@ -36,7 +36,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Image
-              src="/GDC_Logo_White.png"
+              src="/GCC Light (1).png"
               alt="GGC"
               width={110}
               height={36}
