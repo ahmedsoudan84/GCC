@@ -37,7 +37,7 @@ const services = [
     description:
       'Our Capital Markets division advises on debt structuring, cross-border M&A, and project finance for mid-market and large-cap companies with international operations. We bridge institutional investors to high-yield trade-related assets with proven risk profiles.',
     capabilities: ['Debt Structuring & Placement', 'Cross-Border M&A Advisory', 'Project Finance', 'Trade-Related Bond Issuance', 'Private Equity Co-investment', 'Structured Trade Products'],
-    image: 'https://images.unsplash.com/photo-1642790551116-18e4f4afc0fd?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
     stat: '$120B+',
     statLabel: 'Capital arranged',
   },
