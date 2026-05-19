@@ -3,7 +3,7 @@
 ═══════════════════════════════════════════════ */
 
 .section {
-  padding: 6rem clamp(1.5rem, 7vw, 6rem);
+  padding: 5rem clamp(1.5rem, 5vw, 5rem);
 }
 
 .section-inner {
@@ -299,7 +299,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
   margin-bottom: 6rem;
-  align-items: start;
+  align-items: center;
 }
 
 .footer-top-grid {
@@ -314,7 +314,7 @@
   z-index: 2;
   max-width: 640px;
   width: 100%;
-  padding: calc(var(--s-24) + 80px) clamp(1.5rem, 7vw, 6rem) var(--s-24);
+  padding: calc(var(--s-16) + 80px) clamp(1.5rem, 5vw, 5rem) var(--s-16);
 }
 
 .hero-stats-row {
@@ -331,12 +331,12 @@
 }
 
 @media (max-width: 768px) {
-  .section { padding: 3rem 1.25rem; }
+  .section { padding: 2.5rem 1.25rem; }
   .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; gap: 1.5rem; }
   .page-header { padding: calc(4rem + 80px) 1.25rem 2.5rem; }
 
   .two-col-layout { grid-template-columns: 1fr; gap: 2.5rem; }
-  .service-item-layout { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 3rem; }
+  .service-item-layout { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 3rem; direction: ltr !important; }
   .footer-top-grid { grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; margin-bottom: 2rem; }
 
   .hero-copy {
