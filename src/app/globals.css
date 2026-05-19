@@ -73,6 +73,7 @@ body {
   background-clip: text;
 }
 
+/* Marquee */
 @keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -83,11 +84,9 @@ body {
   display: flex;
   width: max-content;
 }
+.animate-marquee:hover { animation-play-state: paused; }
 
-.animate-marquee:hover {
-  animation-play-state: paused;
-}
-
+/* Orb float */
 @keyframes orb-float {
   0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.25; }
   33%       { transform: translate(50px, -40px) scale(1.1); opacity: 0.4; }
@@ -96,3 +95,52 @@ body {
 
 .animate-orb   { animation: orb-float 14s ease-in-out infinite; }
 .animate-orb-b { animation: orb-float 18s ease-in-out infinite 5s reverse; }
+
+/* Globe spin */
+@keyframes globe-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Line reveal */
+@keyframes line-reveal {
+  from { transform: scaleX(0); transform-origin: left; }
+  to   { transform: scaleX(1); transform-origin: left; }
+}
+
+/* Intro grid pulse */
+@keyframes grid-pulse {
+  0%, 100% { opacity: 0.02; }
+  50%       { opacity: 0.04; }
+}
+
+.animate-grid-pulse { animation: grid-pulse 4s ease-in-out infinite; }
+
+/* Shimmer for loading */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(201,148,60,0.15) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Section transitions */
+.section-fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.75s ease, transform 0.75s ease;
+}
+.section-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Globe canvas mask */
+.globe-fade-right {
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 70% 50%, black 40%, transparent 80%);
+  mask-image: radial-gradient(ellipse 80% 80% at 70% 50%, black 40%, transparent 80%);
+}

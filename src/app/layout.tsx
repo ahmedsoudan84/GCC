@@ -17,9 +17,9 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Global Consolidated Contractors | EPC Contractor",
+  title: "Global Group Corp. International | EPC Contractor",
   description:
-    "A global network of enterprises specialized in reconstruction programs — Infrastructure, Defence & Security, and Energy sectors across MENA, Africa, and beyond.",
+    "A global network of enterprises specialized in reconstruction programs — Infrastructure, Defence & Security, and Energy sectors across MENA, Africa, and beyond. Working alongside the UN, NATO, World Bank and governments worldwide.",
   keywords: [
     "EPC contractor",
     "reconstruction",
@@ -31,11 +31,14 @@ export const metadata: Metadata = {
     "UN vendor",
     "NATO",
     "World Bank",
+    "Middle East",
+    "Africa",
+    "development programs",
   ],
   openGraph: {
-    title: "Global Consolidated Contractors International",
+    title: "Global Group Corp. International",
     description:
-      "EPC contractor working with the UN, NATO, World Bank, and US Government on development programs worldwide.",
+      "EPC contractor working with the UN, NATO, World Bank, and governments on reconstruction and development programs worldwide.",
     type: "website",
     locale: "en_GB",
   },
