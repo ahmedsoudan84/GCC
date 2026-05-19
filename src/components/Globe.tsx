@@ -30,11 +30,11 @@ export default function Globe() {
       [0,1],[0,3],[1,3],[1,5],[3,2],[2,4],[0,9],[5,7],[3,10],[8,4],[11,3],[2,8],[4,6],[7,3],
     ];
 
-    const particles = Array.from({ length: 80 }, () => ({
+    const particles = Array.from({ length: 140 }, () => ({
       lat: Math.random() * 160 - 80,
       lng: Math.random() * 360,
-      r: 0.4 + Math.random() * 1.2,
-      alpha: 0.08 + Math.random() * 0.4,
+      r: 0.6 + Math.random() * 1.8,
+      alpha: 0.15 + Math.random() * 0.55,
       drift: 0.01 + Math.random() * 0.04,
     }));
 
@@ -45,8 +45,8 @@ export default function Globe() {
     };
 
     const proj = (x: number, y: number, z: number, cx: number, cy: number, R: number) => ({
-      sx: cx + x * (R / (R + z * 0.25)),
-      sy: cy - y * (R / (R + z * 0.25)),
+      sx: cx + x * (R / (R + z * 0.22)),
+      sy: cy - y * (R / (R + z * 0.22)),
       visible: z > -R * 0.1,
     });
 
@@ -54,16 +54,20 @@ export default function Globe() {
       const dpr = window.devicePixelRatio || 1;
       const W = canvas.width / dpr, H = canvas.height / dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
       ctx.clearRect(0, 0, W, H);
 
-      const cx = W / 2, cy = H / 2;
-      const R = Math.min(W, H) * 0.42;
+      // Offset centre right so globe sits behind text comfortably
+      const cx = W * 0.62, cy = H * 0.5;
+      const R = Math.min(W, H) * 0.52;
 
-      // Outer glow rings
-      [1.35, 1.2, 1.1].forEach((scale, i) => {
-        const g = ctx.createRadialGradient(cx, cy, R * scale * 0.85, cx, cy, R * scale);
-        g.addColorStop(0, `rgba(56,189,248,${[0.04, 0.06, 0.08][i]})`);
+      // ── Outer atmospheric halo rings ──────────────────────
+      [
+        { scale: 1.42, opacity: 0.07 },
+        { scale: 1.28, opacity: 0.12 },
+        { scale: 1.14, opacity: 0.18 },
+      ].forEach(({ scale, opacity }) => {
+        const g = ctx.createRadialGradient(cx, cy, R * scale * 0.78, cx, cy, R * scale);
+        g.addColorStop(0, `rgba(56,189,248,${opacity})`);
         g.addColorStop(1, 'transparent');
         ctx.beginPath();
         ctx.arc(cx, cy, R * scale, 0, Math.PI * 2);
@@ -71,29 +75,29 @@ export default function Globe() {
         ctx.fill();
       });
 
-      // Globe sphere
-      const sg = ctx.createRadialGradient(cx - R * 0.28, cy - R * 0.28, 0, cx, cy, R);
-      sg.addColorStop(0, '#1e2d7a');
-      sg.addColorStop(0.55, '#0e1a4a');
-      sg.addColorStop(1, '#060c22');
+      // ── Globe sphere ──────────────────────────────────────
+      const sg = ctx.createRadialGradient(cx - R * 0.3, cy - R * 0.3, 0, cx, cy, R);
+      sg.addColorStop(0,   '#223080');
+      sg.addColorStop(0.45,'#101e58');
+      sg.addColorStop(1,   '#060c22');
       ctx.beginPath();
       ctx.arc(cx, cy, R, 0, Math.PI * 2);
       ctx.fillStyle = sg;
       ctx.fill();
 
-      // Latitude lines
+      // ── Latitude lines ────────────────────────────────────
       for (let lat = -75; lat <= 75; lat += 15) {
         const la = (lat * Math.PI) / 180;
         const lr = R * Math.cos(la), ly = cy - R * Math.sin(la);
         ctx.beginPath();
         ctx.ellipse(cx, ly, lr, lr * 0.3, 0, 0, Math.PI * 2);
-        ctx.strokeStyle = 'rgba(65,77,188,0.2)';
-        ctx.lineWidth = 0.5;
+        ctx.strokeStyle = 'rgba(80,110,220,0.28)';
+        ctx.lineWidth = 0.7;
         ctx.stroke();
       }
 
-      // Longitude lines
-      for (let lng = 0; lng < 360; lng += 20) {
+      // ── Longitude lines ───────────────────────────────────
+      for (let lng = 0; lng < 360; lng += 18) {
         const lo = ((lng + rotation) * Math.PI) / 180;
         ctx.beginPath();
         let first = true;
@@ -106,76 +110,93 @@ export default function Globe() {
           if (p.visible) { first ? ctx.moveTo(p.sx, p.sy) : ctx.lineTo(p.sx, p.sy); first = false; }
           else { first = true; }
         }
-        ctx.strokeStyle = 'rgba(56,97,200,0.15)';
-        ctx.lineWidth = 0.4;
+        ctx.strokeStyle = 'rgba(70,110,220,0.22)';
+        ctx.lineWidth = 0.6;
         ctx.stroke();
       }
 
-      // Route arcs
+      // ── Route arcs ────────────────────────────────────────
       routes.forEach(([i, j]) => {
         const [la1, ln1] = cities[i], [la2, ln2] = cities[j];
         ctx.beginPath();
         let started = false;
-        for (let s = 0; s <= 50; s++) {
-          const tl = s / 50;
-          const pt = toCart(la1 + (la2 - la1) * tl, ln1 + (ln2 - ln1) * tl, R * 1.015, rotation);
+        for (let s = 0; s <= 60; s++) {
+          const tl = s / 60;
+          const pt = toCart(la1 + (la2 - la1) * tl, ln1 + (ln2 - ln1) * tl, R * 1.012, rotation);
           const p = proj(pt.x, pt.y, pt.z, cx, cy, R);
           if (p.visible) { started ? ctx.lineTo(p.sx, p.sy) : ctx.moveTo(p.sx, p.sy); started = true; }
           else { started = false; }
         }
-        ctx.strokeStyle = 'rgba(56,189,248,0.28)';
-        ctx.lineWidth = 0.65;
+        ctx.strokeStyle = 'rgba(56,189,248,0.5)';
+        ctx.lineWidth = 1.1;
         ctx.stroke();
       });
 
-      // Data packet animation
-      const packetPhase = (t / 2800) % 1;
-      routes.slice(0, 8).forEach(([i, j], ri) => {
-        const pos = (packetPhase + ri * 0.13) % 1;
+      // ── Data packets ──────────────────────────────────────
+      const packetPhase = (t / 2600) % 1;
+      routes.slice(0, 10).forEach(([i, j], ri) => {
+        const pos = (packetPhase + ri * 0.11) % 1;
         const [la1, ln1] = cities[i], [la2, ln2] = cities[j];
-        const pt = toCart(la1 + (la2 - la1) * pos, ln1 + (ln2 - ln1) * pos, R * 1.02, rotation);
+        const pt = toCart(la1 + (la2 - la1) * pos, ln1 + (ln2 - ln1) * pos, R * 1.018, rotation);
         const p = proj(pt.x, pt.y, pt.z, cx, cy, R);
         if (!p.visible) return;
         const depth = Math.max(0, (pt.z + R) / (2 * R));
-        ctx.beginPath(); ctx.arc(p.sx, p.sy, 2, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(56,189,248,${0.95 * depth})`; ctx.fill();
-        ctx.beginPath(); ctx.arc(p.sx, p.sy, 5, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(56,189,248,${0.18 * depth})`; ctx.fill();
+        // core dot
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(56,189,248,${depth})`; ctx.fill();
+        // inner glow
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 6, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(56,189,248,${0.28 * depth})`; ctx.fill();
+        // outer glow
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 11, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(56,189,248,${0.1 * depth})`; ctx.fill();
       });
 
-      // City dots with pulse
+      // ── City dots with pulse rings ────────────────────────
       cities.forEach(([lat, lng]) => {
         const pt = toCart(lat, lng, R, rotation);
         const p = proj(pt.x, pt.y, pt.z, cx, cy, R);
         if (!p.visible) return;
         const depth = Math.max(0, (pt.z + R) / (2 * R));
-        const pulse = 0.5 + 0.5 * Math.sin(t * 0.0025 + lat * 0.1);
-        ctx.beginPath(); ctx.arc(p.sx, p.sy, 3 + pulse * 3.5, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(56,189,248,${depth * 0.3})`; ctx.lineWidth = 0.8; ctx.stroke();
-        ctx.beginPath(); ctx.arc(p.sx, p.sy, 2, 0, Math.PI * 2);
+        const pulse = 0.5 + 0.5 * Math.sin(t * 0.0022 + lat * 0.12);
+
+        // outer pulse ring
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 5 + pulse * 6, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(56,189,248,${depth * 0.35})`; ctx.lineWidth = 0.8; ctx.stroke();
+        // mid ring
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 3 + pulse * 2, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(56,189,248,${depth * 0.55})`; ctx.lineWidth = 0.6; ctx.stroke();
+        // core
+        ctx.beginPath(); ctx.arc(p.sx, p.sy, 2.2, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(56,189,248,${depth})`; ctx.fill();
       });
 
-      // Floating particles
+      // ── Orbital particles ─────────────────────────────────
       particles.forEach((pt) => {
-        const p = toCart(pt.lat, pt.lng, R * 1.06, rotation * pt.drift * 15);
+        const p = toCart(pt.lat, pt.lng, R * 1.07, rotation * pt.drift * 14);
         const pp = proj(p.x, p.y, p.z, cx, cy, R);
         if (!pp.visible) return;
         const depth = Math.max(0, (p.z + R) / (2 * R));
         ctx.beginPath(); ctx.arc(pp.sx, pp.sy, pt.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(100,149,255,${pt.alpha * depth})`; ctx.fill();
+        ctx.fillStyle = `rgba(120,165,255,${pt.alpha * depth})`; ctx.fill();
       });
 
-      // Specular highlight
-      const hi = ctx.createRadialGradient(cx - R * 0.38, cy - R * 0.35, 0, cx - R * 0.22, cy - R * 0.2, R * 0.75);
-      hi.addColorStop(0, 'rgba(255,255,255,0.09)'); hi.addColorStop(1, 'transparent');
+      // ── Specular highlight ────────────────────────────────
+      const hi = ctx.createRadialGradient(cx - R * 0.38, cy - R * 0.36, 0, cx - R * 0.2, cy - R * 0.18, R * 0.8);
+      hi.addColorStop(0, 'rgba(255,255,255,0.13)'); hi.addColorStop(1, 'transparent');
       ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
       ctx.fillStyle = hi; ctx.fill();
+
+      // ── Bottom azure rim glow ─────────────────────────────
+      const rim = ctx.createRadialGradient(cx, cy + R * 0.8, 0, cx, cy + R * 0.8, R * 0.65);
+      rim.addColorStop(0, 'rgba(56,189,248,0.12)'); rim.addColorStop(1, 'transparent');
+      ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+      ctx.fillStyle = rim; ctx.fill();
     };
 
     let start = performance.now();
     const animate = (ts: number) => {
-      rotation += 0.07;
+      rotation += 0.06;
       draw(ts - start);
       frameId = requestAnimationFrame(animate);
     };

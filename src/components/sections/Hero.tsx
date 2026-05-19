@@ -140,7 +140,7 @@ const s: Record<string, React.CSSProperties> = {
     position: 'absolute',
     inset: 0,
     background:
-      'linear-gradient(100deg, rgba(7,16,42,0.96) 0%, rgba(7,16,42,0.78) 45%, rgba(7,16,42,0.15) 100%)',
+      'linear-gradient(100deg, rgba(7,16,42,0.94) 0%, rgba(7,16,42,0.65) 40%, rgba(7,16,42,0.05) 100%)',
     zIndex: 1,
   },
   copy: {

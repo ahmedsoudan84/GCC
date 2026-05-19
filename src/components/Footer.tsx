@@ -36,11 +36,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Image
-              src="/GCC Light (1).png"
+              src="/gcc-logo-cropped.png"
               alt="GGC"
-              width={110}
-              height={36}
-              style={{ marginBottom: '1.25rem', display: 'block' }}
+              width={332}
+              height={380}
+              style={{ height: '52px', width: 'auto', marginBottom: '1.25rem', display: 'block' }}
             />
             <p style={{ fontSize: '0.8125rem', lineHeight: 1.75, color: 'rgba(250,250,250,0.4)', maxWidth: '240px' }}>
               Global Group Corp. — trade finance, logistics, and capital solutions across 150 countries since 1998.
