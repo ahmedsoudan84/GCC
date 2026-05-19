@@ -33,7 +33,7 @@ export default function Navbar() {
       {/* Top bar */}
       <div className="nav-bar">
         <Link href="/" className="nav-logo">
-          <Image src="/GDC_Logo_White.png" alt="Global Group Corp." width={260} height={80} priority />
+          <Image src="/logo.jpeg" alt="Global Group Corp." width={260} height={80} priority />
         </Link>
 
         <Link href="/contact" className="nav-cta">Get in Touch</Link>
