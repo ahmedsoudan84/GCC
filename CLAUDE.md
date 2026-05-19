@@ -131,25 +131,86 @@ Features:
 
 ## Available Claude Code Skills
 
-Load these via `/skill <name>` to enable specialized workflows:
+Skills are specialized tools that augment Claude Code workflows. Load any skill via `/skill <name>` to enable its capabilities.
 
-### Content & Documentation
-- **`init`** — Initialize CLAUDE.md (this file)
-- **`review`** — Pull request review with automated analysis
+### When & How to Use Each Skill
 
-### Development Setup
-- **`session-start-hook`** — Configure test/lint hooks for web sessions
-- **`update-config`** — Edit settings.json to auto-run commands, set env vars, manage permissions
+#### Documentation
+- **`init`** — Initialize or improve CLAUDE.md
+  - **When**: At session start if CLAUDE.md doesn't exist, or when docs need updating
+  - **How**: Type `/skill init`, then provide codebase analysis context. The skill will scan your project and generate/improve the file.
+  - **Example**: "Create CLAUDE.md with commands, architecture, and key patterns"
+
+#### Code Review & Quality
+- **`review`** — Automated pull request analysis
+  - **When**: Before merging a PR or after pushing changes to validate quality
+  - **How**: Type `/skill review` when you have a pending PR. The skill will analyze diffs and suggest improvements.
+  - **Example**: Point to a PR URL and ask for code review feedback
+
+- **`simplify`** — Detect code smells and inefficiencies
+  - **When**: After making changes, before committing
+  - **How**: Type `/skill simplify`. The skill scans your uncommitted changes for duplication, unnecessary complexity, and improvement opportunities.
+  - **Use Case**: "Review my changes for reuse and efficiency before I commit"
+
+- **`security-review`** — Detect vulnerabilities and security issues
+  - **When**: Before pushing security-sensitive code (auth, forms, API calls)
+  - **How**: Type `/skill security-review`. The skill analyzes pending changes for OWASP top 10, injection risks, XSS, etc.
+  - **Use Case**: "Check contact form inputs for security issues"
+
+#### Development Setup
+- **`session-start-hook`** — Auto-run commands at session start
+  - **When**: You want linting/tests to run automatically each time you spin up a web session
+  - **How**: Type `/skill session-start-hook`. Configure it to run `npm run lint` or `npm run build` on startup.
+  - **Example**: "Run `npm run lint` automatically when I start a web session"
+
+- **`update-config`** — Modify project settings.json for automated behaviors
+  - **When**: You want recurring workflows (e.g., "always run lint before commits", "auto-fetch and build on startup")
+  - **How**: Type `/skill update-config`. You can:
+    - Add permissions (e.g., "allow npm install globally")
+    - Set environment variables (e.g., `DEBUG=true`)
+    - Configure hooks to run commands before/after tool calls
+    - Reduce permission prompts by auto-allowing safe operations
+  - **Example**: "Add a hook to run `npm run lint` before each git commit"
+
 - **`keybindings-help`** — Customize keyboard shortcuts
+  - **When**: You want to rebind keys or add chord shortcuts
+  - **How**: Type `/skill keybindings-help`. Modify `~/.claude/keybindings.json` to rebind keys or add new shortcuts.
+  - **Example**: "Rebind Ctrl+S to git push", "Add Alt+T to open terminal"
 
-### Code Quality
-- **`simplify`** — Scan changes for reuse, efficiency, and improvements
-- **`security-review`** — Analyze pending changes for vulnerabilities
-- **`fewer-permission-prompts`** — Auto-generate allowlist for common read-only operations
+#### Permission Management
+- **`fewer-permission-prompts`** — Auto-generate allowlist for common operations
+  - **When**: You're tired of confirming permissions for safe read-only operations
+  - **How**: Type `/skill fewer-permission-prompts`. The skill scans your transcript for common Bash and MCP tool calls, then adds them to `.claude/settings.json` as an allowlist.
+  - **Result**: Future sessions skip prompts for those whitelisted operations.
+  - **Use Case**: "Stop asking me to confirm `git status`, `npm run dev`, etc."
 
-### Advanced
-- **`loop`** — Run commands/prompts on recurring intervals (e.g., `/loop 5m npm run dev`)
-- **`claude-api`** — Build/debug Claude API or Anthropic SDK integrations (this repo has `@anthropic-ai/sdk` as a dependency)
+#### Advanced Workflows
+- **`loop`** — Run commands or prompts on recurring intervals
+  - **When**: You need to poll for status, monitor logs, or run something repeatedly
+  - **How**: Type `/skill loop` then specify interval and command
+  - **Examples**:
+    - `/loop 5m npm run dev` — Restart dev server every 5 minutes
+    - `/loop 30s git fetch` — Poll git every 30 seconds
+    - `/loop /babysit-prs` — Monitor PRs on 5-minute intervals (custom prompt)
+  - **Note**: Omit interval to let the skill self-pace
+
+- **`claude-api`** — Build and debug Claude API / Anthropic SDK apps
+  - **When**: Working with `@anthropic-ai/sdk` code (this repo has it as a dependency)
+  - **How**: Type `/skill claude-api`. Use it to:
+    - Build new API integrations
+    - Debug SDK code
+    - Add/modify features (caching, streaming, function calling, vision, etc.)
+    - Migrate between Claude model versions
+  - **Use Case**: "Add prompt caching to our API calls", "Integrate Claude AI into the contact form backend"
+
+### Recommended Workflow for This Project
+
+1. **Start of session**: Confirm you understand the design system by reading CLAUDE.md
+2. **Before making changes**: Use `/skill simplify` on any refactoring
+3. **After changes**: Use `/skill security-review` for forms/API code, `/skill simplify` for all changes
+4. **Before pushing**: Use `/skill review` if creating a PR
+5. **Setup automation**: Use `/skill update-config` to auto-run `npm run lint` on commit
+6. **Reduce prompts**: Use `/skill fewer-permission-prompts` after your first session to whitelist safe operations
 
 ## Common Workflows
 
