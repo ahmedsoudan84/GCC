@@ -1,46 +1,22 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
-  weight: ["400", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Global Group Corp. International | EPC Contractor",
+  title: "Global Group Corp. | Trade • Logistics • Capital",
   description:
-    "A global network of enterprises specialized in reconstruction programs — Infrastructure, Defence & Security, and Energy sectors across MENA, Africa, and beyond. Working alongside the UN, NATO, World Bank and governments worldwide.",
+    "Global trade, logistics, and capital group. Financial intelligence, operational excellence, and global reach for modern commerce.",
   keywords: [
-    "EPC contractor",
-    "reconstruction",
-    "infrastructure",
-    "defence",
-    "energy",
-    "MENA",
-    "global contractor",
-    "UN vendor",
-    "NATO",
-    "World Bank",
-    "Middle East",
-    "Africa",
-    "development programs",
+    "global trade",
+    "logistics",
+    "capital markets",
+    "trade finance",
+    "supply chain",
+    "international commerce",
   ],
   openGraph: {
-    title: "Global Group Corp. International",
-    description:
-      "EPC contractor working with the UN, NATO, World Bank, and governments on reconstruction and development programs worldwide.",
+    title: "Global Group Corp.",
+    description: "Global leader in trade, logistics, and capital.",
     type: "website",
-    locale: "en_GB",
   },
 };
 
@@ -50,7 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </head>
       <body>{children}</body>
     </html>
   );
