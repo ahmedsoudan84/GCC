@@ -202,7 +202,7 @@ export default function TeamPage() {
                 what separates GGC from advisory-only competitors.
               </p>
               <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-                Work with Us <span className="arrow">→</span>
+                Work with Us <span className="arrow" />
               </Link>
             </motion.div>
 

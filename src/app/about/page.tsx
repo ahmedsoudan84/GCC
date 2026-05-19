@@ -191,7 +191,7 @@ export default function AboutPage() {
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-              Get in Touch <span className="arrow">→</span>
+              Get in Touch <span className="arrow" />
             </Link>
             <Link href="/services" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
               Explore Services

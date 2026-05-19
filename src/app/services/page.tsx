@@ -103,7 +103,7 @@ export default function ServicesPage() {
             that operate at the intersection of trade, logistics, and capital.
           </p>
           <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-            Discuss Your Requirements <span className="arrow">→</span>
+            Discuss Your Requirements <span className="arrow" />
           </Link>
         </motion.div>
       </div>
@@ -200,7 +200,7 @@ export default function ServicesPage() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-              Schedule a Consultation <span className="arrow">→</span>
+              Schedule a Consultation <span className="arrow" />
             </Link>
             <Link href="/team" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
               Meet the Team
