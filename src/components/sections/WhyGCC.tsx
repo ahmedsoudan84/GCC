@@ -110,7 +110,7 @@ export default function WhyGCC() {
               variants={containerVariants}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: '-60px' }}
             >
               {pillars.map((pillar) => (
                 <motion.div
