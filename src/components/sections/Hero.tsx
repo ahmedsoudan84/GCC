@@ -67,7 +67,7 @@ export default function Hero() {
 
       {/* Copy */}
       <motion.div
-        style={s.copy}
+        className="hero-copy"
         variants={stagger}
         initial="hidden"
         animate={visible ? 'show' : 'hidden'}
@@ -104,7 +104,7 @@ export default function Hero() {
         {/* Stats */}
         <motion.div variants={fadeUp} style={s.statsWrap}>
           <div style={s.statsDivider} />
-          <div style={s.statsRow}>
+          <div className="hero-stats-row">
             {stats.map((st) => (
               <div key={st.label} style={s.stat}>
                 <span style={s.statNum}>
@@ -151,12 +151,7 @@ const s: Record<string, React.CSSProperties> = {
       'linear-gradient(100deg, rgba(7,16,42,0.94) 0%, rgba(7,16,42,0.65) 40%, rgba(7,16,42,0.05) 100%)',
     zIndex: 1,
   },
-  copy: {
-    position: 'relative',
-    zIndex: 2,
-    maxWidth: '640px',
-    padding: 'calc(var(--s-24) + 80px) clamp(1.5rem, 7vw, 6rem) var(--s-24)',
-  },
+  copy: {}, /* layout handled by .hero-copy CSS class */
   eyebrow: {
     fontSize: '0.58rem',
     fontWeight: 600,
@@ -204,12 +199,7 @@ const s: Record<string, React.CSSProperties> = {
     height: '1px',
     background: 'rgba(250,250,250,0.08)',
   },
-  statsRow: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(4, auto)',
-    gap: '2.5rem',
-    justifyContent: 'start',
-  },
+  statsRow: {}, /* layout handled by .hero-stats-row CSS class */
   stat: {
     display: 'flex',
     flexDirection: 'column',

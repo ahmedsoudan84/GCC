@@ -43,7 +43,7 @@ export default function WhyGCC() {
   return (
     <section className="section" style={{ background: 'var(--bg-secondary)' }} id="why-ggc">
       <div className="section-inner">
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
+        <div className="two-col-layout">
 
           {/* Left – image + stat callouts */}
           <motion.div

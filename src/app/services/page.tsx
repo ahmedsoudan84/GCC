@@ -122,14 +122,8 @@ export default function ServicesPage() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-60px' }}
                 variants={item}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '4rem',
-                  alignItems: 'center',
-                  marginBottom: '6rem',
-                  direction: isEven ? 'ltr' : 'rtl',
-                }}
+                className="service-item-layout"
+                style={{ direction: isEven ? 'ltr' : 'rtl' }}
               >
                 {/* Image */}
                 <div style={{ direction: 'ltr', position: 'relative', borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/3', boxShadow: '8px 8px 24px #070e28, -8px -8px 24px #0f1a46' }}>

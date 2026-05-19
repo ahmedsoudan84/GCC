@@ -182,7 +182,7 @@ export default function TeamPage() {
       {/* Culture section */}
       <section className="section" style={{ background: 'var(--bg-secondary)' }}>
         <div className="section-inner">
-          <div className="grid-2" style={{ alignItems: 'center', gap: '5rem' }}>
+          <div className="two-col-layout" style={{ alignItems: 'center' }}>
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}

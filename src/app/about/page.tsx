@@ -52,7 +52,7 @@ export default function AboutPage() {
       {/* Mission statement */}
       <section className="section" style={{ background: 'var(--bg-primary)' }}>
         <div className="section-inner">
-          <div className="grid-2" style={{ gap: '5rem', alignItems: 'center' }}>
+          <div className="two-col-layout" style={{ alignItems: 'center' }}>
             <motion.div
               initial={{ opacity: 0, x: -24 }}
               whileInView={{ opacity: 1, x: 0 }}
