@@ -1,229 +1,145 @@
-/* GGC — Global Group Corp. Design System
-   Navy + ivory foundation, electric azure accent, modern sans throughout.
-   ────────────────────────────────────────────────────────────── */
-
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Geist+Mono:wght@400;500;600&display=swap");
-
+/* Color System - Ink Scale (Navy) */
 :root {
-  /* ── CORE PALETTE ────────────────────────────────────────── */
-  --ink-900: #050a1c;          /* deepest, near-black navy */
-  --ink-800: #0b1437;          /* primary brand navy (logo) */
-  --ink-700: #14224d;          /* elevated navy surfaces */
-  --ink-600: #1f3066;          /* navy accents / hovers */
-  --ink-500: #2e447f;          /* mid navy */
-  --ink-400: #5a6d9c;          /* muted navy text on light */
-  --ink-300: #8a99bf;          /* secondary navy text on light */
-  --ink-200: #c5cee0;          /* subtle navy borders */
-  --ink-100: #e5eaf3;          /* navy tint on white */
+  --ink-900: #0B1437;
+  --ink-800: #141C4D;
+  --ink-700: #1D2663;
+  --ink-600: #262F79;
+  --ink-500: #2F3990;
+  --ink-400: #3843A6;
+  --ink-300: #414DBC;
+  --ink-200: #4A57D2;
+  --ink-100: #5361E8;
 
-  --ivory-50:  #e6eaf2;        /* neumorphic surface — soft gray-blue */
-  --ivory-100: #dfe3ec;        /* recessed surface */
-  --ivory-200: #cfd4df;        /* dividers */
+  /* Ivory Scale */
+  --ivory-900: #0B0B0B;
+  --ivory-800: #1F1F1F;
+  --ivory-700: #333333;
+  --ivory-600: #474747;
+  --ivory-500: #5B5B5B;
+  --ivory-400: #6F6F6F;
+  --ivory-300: #838383;
+  --ivory-200: #969696;
+  --ivory-100: #FAFAFA;
 
-  --white:    #ffffff;
-  --black:    #000000;
+  /* Accent Scale - Electric Azure */
+  --accent-900: #0369A1;
+  --accent-800: #0284C7;
+  --accent-700: #0EA5E9;
+  --accent-600: #38BDF8;
+  --accent-500: #7DD3FC;
+  --accent-400: #BAE6FD;
+  --accent-300: #E0F2FE;
+  --accent-200: #F0F9FE;
+  --accent-100: #F8FCFE;
 
-  /* ── ACCENT — ELECTRIC AZURE ─────────────────────────────── */
-  /* One cool accent. Used sparingly: 1 CTA, focus, status ticks. */
-  --accent-500: #38bdf8;       /* primary accent · electric sky */
-  --accent-600: #0284c7;       /* press / pressed accent */
-  --accent-400: #7dd3fc;       /* hover accent */
-  --accent-300: #bae6fd;       /* tint */
-  --accent-100: #e0f2fe;       /* faintest azure wash */
+  /* Semantic Tokens */
+  --bg-primary: var(--ink-900);
+  --bg-secondary: var(--ink-800);
+  --bg-tertiary: var(--ink-700);
+  --bg-inverse: var(--ivory-100);
+  --bg-accent: var(--accent-600);
 
-  /* legacy alias — keep the old --brass-* names resolving so any
-     lingering reference still picks up the new accent value */
-  --brass-500: var(--accent-500);
-  --brass-600: var(--accent-600);
-  --brass-400: var(--accent-400);
-  --brass-300: var(--accent-300);
-  --brass-100: var(--accent-100);
+  --ink-primary: var(--ivory-100);
+  --ink-secondary: var(--ivory-200);
+  --ink-tertiary: var(--ivory-400);
+  --ink-interactive: var(--accent-600);
+  --ink-disabled: var(--ivory-400);
 
-  /* ── SEMANTIC ────────────────────────────────────────────── */
-  --bg:         var(--ivory-50);
-  --bg-elev:    var(--white);
-  --bg-inverse: var(--ink-800);
-  --bg-deep:    var(--ink-900);
+  --border-primary: var(--ink-700);
+  --border-secondary: var(--ink-600);
+  --border-accent: var(--accent-600);
 
-  --fg:         var(--ink-800);
-  --fg-muted:   var(--ink-400);
-  --fg-subtle:  var(--ink-300);
-  --fg-inverse: var(--ivory-50);
+  /* Typography Scale */
+  --font-display: 'Montserrat', sans-serif;
+  --font-body: 'Montserrat', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
 
-  --accent:     var(--accent-500);
-  --accent-hi:  var(--accent-400);
-  --accent-lo:  var(--accent-600);
+  /* Display Sizes */
+  --size-display-1: 3.5rem;
+  --size-display-2: 3rem;
+  --size-display-3: 2.5rem;
 
-  --border:     var(--ink-200);
-  --border-strong: var(--ink-800);
-  --divider:    var(--ivory-200);
+  /* Heading Sizes */
+  --size-h1: 2rem;
+  --size-h2: 1.5rem;
+  --size-h3: 1.25rem;
+  --size-h4: 1.125rem;
 
-  --success: #16a34a;
-  --warning: #d97706;
-  --danger:  #dc2626;
+  /* Body Sizes */
+  --size-body-lg: 1.125rem;
+  --size-body-md: 1rem;
+  --size-body-sm: 0.875rem;
 
-  /* ── TYPE ────────────────────────────────────────────────── */
-  --font-display: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-serif:   "Montserrat", sans-serif; /* legacy alias */
-  --font-sans:    "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  --font-mono:    "Geist Mono", "SF Mono", Menlo, monospace;
+  /* Caption & Eyebrow */
+  --size-caption: 0.75rem;
+  --size-eyebrow: 0.625rem;
 
-  /* type scale */
-  --t-display: clamp(48px, 7vw, 96px);
-  --t-h1: 56px;
-  --t-h2: 40px;
-  --t-h3: 28px;
-  --t-h4: 20px;
-  --t-body-lg: 18px;
-  --t-body: 16px;
-  --t-body-sm: 14px;
-  --t-caption: 12px;
-  --t-eyebrow: 11px;
+  /* Font Weights */
+  --weight-thin: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+  --weight-black: 900;
 
-  /* leading */
-  --lh-tight: 1.02;
-  --lh-snug:  1.15;
-  --lh-body:  1.55;
-  --lh-loose: 1.75;
+  /* Line Heights */
+  --line-height-tight: 1.2;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
 
-  /* tracking — Montserrat is wider, dial tracking tighter on display */
-  --tr-display: -0.03em;
-  --tr-h1: -0.025em;
-  --tr-eyebrow: 0.22em;
-  --tr-button:  0.12em;
+  /* Letter Spacing */
+  --tracking-tight: -0.03em;
+  --tracking-normal: 0;
+  --tracking-loose: 0.05em;
 
-  /* ── SPACING (4-base) ───────────────────────────────────── */
-  --s-0: 0;
-  --s-1: 4px;
-  --s-2: 8px;
-  --s-3: 12px;
-  --s-4: 16px;
-  --s-5: 24px;
-  --s-6: 32px;
-  --s-7: 48px;
-  --s-8: 64px;
-  --s-9: 96px;
-  --s-10: 128px;
+  /* Spacing Scale (4px base) */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.25rem;
+  --s-6: 1.5rem;
+  --s-7: 1.75rem;
+  --s-8: 2rem;
+  --s-10: 2.5rem;
+  --s-12: 3rem;
+  --s-16: 4rem;
+  --s-20: 5rem;
+  --s-24: 6rem;
 
-  /* ── RADII — futurist rounded ────────────────────────────── */
-  --r-0: 0;
-  --r-1: 4px;
-  --r-2: 8px;
-  --r-3: 12px;          /* primary button radius */
-  --r-4: 16px;
-  --r-pill: 999px;
+  /* Border Radius */
+  --radius-0: 0;
+  --radius-1: 0.25rem;
+  --radius-2: 0.5rem;
+  --radius-3: 0.75rem;
+  --radius-4: 1rem;
+  --radius-5: 1.25rem;
+  --radius-pill: 9999px;
 
-  /* ── ELEVATION ───────────────────────────────────────────── */
-  /* ── ELEVATION — Neumorphic dual-shadow ──────────────────── */
-  /* Light source top-left. Highlight = pure white, shade = surface 4-shades-darker. */
-  --neu-light: #ffffff;
-  --neu-shade: #b8bdc9;
+  /* Shadows */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-2: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-3: 0 10px 15px rgba(0, 0, 0, 0.2);
+  --shadow-inset-1: inset 0 1px 2px rgba(255, 255, 255, 0.05);
+  --shadow-inset-2: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+  --shadow-elevation: 0 20px 25px rgba(0, 0, 0, 0.15);
 
-  --shadow-1: -3px -3px 6px var(--neu-light), 4px 4px 8px var(--neu-shade);
-  --shadow-2: -6px -6px 12px var(--neu-light), 8px 8px 16px var(--neu-shade);
-  --shadow-3: -10px -10px 22px var(--neu-light), 14px 14px 28px var(--neu-shade);
-  --shadow-inset: inset 4px 4px 8px var(--neu-shade), inset -3px -3px 6px var(--neu-light);
-  --shadow-glow: 0 0 0 1px var(--accent-500), 0 0 24px -4px rgba(56, 189, 248, 0.55);
-  --shadow-inset-line: inset 0 0 0 1px rgba(255,255,255,0.08);
-
-  /* ── MOTION ──────────────────────────────────────────────── */
+  /* Motion */
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-  --dur-fast: 120ms;
-  --dur-base: 220ms;
-  --dur-slow: 420ms;
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 120ms;
+  --duration-base: 220ms;
+  --duration-slow: 420ms;
 }
 
-/* ── BASE ELEMENT STYLES ──────────────────────────────────── */
+/* Dark mode (default) */
+html {
+  color-scheme: dark;
+}
+
 html, body {
-  background: var(--bg);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  font-size: var(--t-body);
-  line-height: var(--lh-body);
-  -webkit-font-smoothing: antialiased;
-}
-
-h1, h2, h3, h4, .display {
-  font-family: var(--font-display);
-  font-weight: 700;
-  color: var(--ink-800);
-  letter-spacing: var(--tr-display);
-  line-height: var(--lh-snug);
   margin: 0;
+  padding: 0;
 }
-h1 { font-size: var(--t-h1); line-height: var(--lh-tight); letter-spacing: var(--tr-h1); }
-h2 { font-size: var(--t-h2); }
-h3 { font-size: var(--t-h3); }
-h4 { font-size: var(--t-h4); }
-
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: var(--t-eyebrow);
-  font-weight: 500;
-  letter-spacing: var(--tr-eyebrow);
-  text-transform: uppercase;
-  color: var(--accent-600);
-}
-
-.mono { font-family: var(--font-mono); font-size: 0.92em; }
-
-/* ── DARK MODE ──────────────────────────────────────────── */
-/* Activate with <html data-theme="dark"> or [data-theme="dark"] on body. */
-[data-theme="dark"] {
-  --bg:         #1a2447;        /* primary dark surface */
-  --bg-elev:    #233060;        /* lifted card */
-  --bg-inverse: var(--ivory-50);
-  --bg-deep:    #0b1437;
-
-  --fg:         var(--ivory-50);
-  --fg-muted:   #9aa6c8;
-  --fg-subtle:  #6b779b;
-  --fg-inverse: var(--ink-800);
-
-  --border:     #2c3a70;
-  --border-strong: var(--ivory-50);
-  --divider:    #243056;
-
-  /* Neumorphic shadow palette flips: deeper shadow + faint navy highlight */
-  --neu-light: rgba(110, 130, 200, 0.18);
-  --neu-shade: rgba(0, 0, 0, 0.6);
-}
-
-/* In dark mode the primary button flips to ivory pillow (matches .light) */
-[data-theme="dark"] .ggc-btn {
-  --b-bg: var(--ivory-50);
-  --b-fg: var(--ink-800);
-  --b-in-hi: rgba(255, 255, 255, 0.95);
-  --b-in-lo: rgba(11, 20, 55, 0.08);
-}
-[data-theme="dark"] .ggc-btn:hover { color: var(--accent-600); }
-
-/* Outline = sunken navy chip on the dark surface */
-[data-theme="dark"] .ggc-btn.outline {
-  --b-bg: #1a2447;
-  --b-fg: var(--ivory-50);
-}
-
-/* Light variant on dark mode = navy pillow (inverse of light-mode primary) */
-[data-theme="dark"] .ggc-btn.light {
-  --b-bg: var(--ink-700);
-  --b-fg: var(--ivory-50);
-  --b-in-hi: rgba(95, 110, 160, 0.45);
-  --b-in-lo: rgba(0, 0, 0, 0.45);
-  box-shadow:
-    -5px -5px 12px var(--neu-light),
-     7px  7px 16px var(--neu-shade),
-    inset 1px 1px 1px var(--b-in-hi),
-    inset -1px -1px 1px var(--b-in-lo);
-}
-
-/* Icon button — surface match in dark mode */
-[data-theme="dark"] .ggc-icon-btn {
-  background: var(--bg);
-  color: var(--ivory-50);
-}
-
-/* Ghost text stays readable */
-[data-theme="dark"] .ggc-btn.ghost { color: var(--ivory-50); }
-[data-theme="dark"] .ggc-btn.ghost:hover { background: rgba(255,255,255,0.04); color: var(--accent-400); }

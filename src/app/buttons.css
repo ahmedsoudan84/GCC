@@ -1,231 +1,146 @@
-/* GGC neumorphic button system v3 — proper soft UI
-   ------------------------------------------------------------------
-   Strong dual shadows + inner highlights/lowlights give the "soft
-   pillow extruded from the surface" feel. No clip-paths, no corner
-   ticks. Page surface must be --ivory-50 (#E6EAF2). */
+/* Neumorphic Button System - Flat Design (No Shadows/Glows) */
 
 .ggc-btn {
-  --b-bg: var(--ink-800);
-  --b-fg: var(--ivory-50);
-  --b-radius: 16px;
-  --b-in-hi: rgba(95, 110, 160, 0.45);
-  --b-in-lo: rgba(0, 0, 0, 0.45);
-
-  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 18px 30px;
-  background: var(--b-bg);
-  color: var(--b-fg);
-  font-family: var(--font-sans);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: var(--tr-button);
-  text-transform: uppercase;
-  text-decoration: none;
+  justify-content: center;
+  gap: var(--s-2);
+  padding: var(--s-3) var(--s-6);
   border: none;
-  border-radius: var(--b-radius);
+  border-radius: var(--radius-2);
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  font-size: var(--size-body-md);
   cursor: pointer;
-  user-select: none;
+  transition: all var(--duration-fast) var(--ease-out);
+  text-decoration: none;
   white-space: nowrap;
-  /* Outer neumorphic dual shadow + inner pillow highlight + lowlight */
-  box-shadow:
-    -7px -7px 16px var(--neu-light),
-     9px  9px 20px var(--neu-shade),
-    inset 1px 1px 1px var(--b-in-hi),
-    inset -1px -1px 1px var(--b-in-lo);
-  transition: box-shadow var(--dur-base) var(--ease-out),
-              color var(--dur-base) var(--ease-out),
-              background var(--dur-base) var(--ease-out),
-              transform var(--dur-fast) var(--ease-out);
-}
-
-.ggc-btn:hover {
-  color: var(--accent-400);
-  box-shadow:
-    -9px -9px 20px var(--neu-light),
-    12px 12px 24px var(--neu-shade),
-    inset 1px 1px 1px var(--b-in-hi),
-    inset -1px -1px 1px var(--b-in-lo);
-}
-
-.ggc-btn:active {
-  box-shadow:
-    inset  5px  5px 10px var(--neu-shade),
-    inset -4px -4px  8px var(--neu-light);
+  position: relative;
 }
 
 .ggc-btn:focus-visible {
-  outline: none;
-  box-shadow:
-    -7px -7px 16px var(--neu-light),
-     9px  9px 20px var(--neu-shade),
-    inset 1px 1px 1px var(--b-in-hi),
-    inset -1px -1px 1px var(--b-in-lo),
-    0 0 0 2px var(--accent-500);
+  outline: 2px solid var(--accent-600);
+  outline-offset: 2px;
 }
 
-/* arrow */
-.ggc-btn .arrow {
-  display: inline-block;
-  width: 14px; height: 1.5px;
-  background: currentColor;
-  position: relative;
-  margin-left: 4px;
-  transition: width var(--dur-base) var(--ease-out);
-  border-radius: 1px;
-}
-.ggc-btn .arrow::after {
-  content: "";
-  position: absolute;
-  right: 0; top: 50%;
-  width: 6px; height: 6px;
-  border-top: 1.5px solid currentColor;
-  border-right: 1.5px solid currentColor;
-  transform: translateY(-50%) rotate(45deg);
-}
-.ggc-btn:hover .arrow { width: 22px; }
-
-/* ── PRIMARY (navy pillow) ───────────────────────────────── */
-.ggc-btn.primary {}
-.ggc-btn.primary:hover {}
-.ggc-btn.primary:active { color: var(--ivory-50); }
-
-/* ── ACCENT (azure pillow — single CTA) ──────────────────── */
-.ggc-btn.accent {
-  --b-bg: var(--accent-500);
-  --b-fg: var(--ink-900);
-  --b-in-hi: rgba(255, 255, 255, 0.7);
-  --b-in-lo: rgba(2, 132, 199, 0.55);
-}
-.ggc-btn.accent:hover {
-  --b-bg: var(--accent-400);
-  color: var(--ink-900);
-}
-.ggc-btn.accent:active {
-  --b-bg: var(--accent-600);
-  color: var(--ivory-50);
-}
-
-/* ── OUTLINE (sunken chip — inset at rest) ───────────────── */
-.ggc-btn.outline {
-  --b-bg: var(--ivory-50);
-  --b-fg: var(--ink-800);
-  --b-in-hi: transparent;
-  --b-in-lo: transparent;
-  box-shadow:
-    inset  5px  5px 10px var(--neu-shade),
-    inset -4px -4px  8px var(--neu-light);
-}
-.ggc-btn.outline:hover {
-  color: var(--accent-600);
-  box-shadow:
-    inset  3px  3px 6px var(--neu-shade),
-    inset -2px -2px 4px var(--neu-light);
-}
-.ggc-btn.outline:active {
-  box-shadow:
-    inset  6px  6px 12px var(--neu-shade),
-    inset -5px -5px 10px var(--neu-light);
-}
-
-/* ── GHOST ───────────────────────────────────────────────── */
-.ggc-btn.ghost {
-  background: transparent;
-  box-shadow: none;
-  padding: 14px 18px;
-  color: var(--ink-800);
-}
-.ggc-btn.ghost:hover { color: var(--accent-600); box-shadow: none; }
-.ggc-btn.ghost:active { box-shadow: none; transform: translateY(1px); }
-
-/* ── ON-DARK (sits on a navy surface) ────────────────────── */
-/* LIGHT (ivory pillow on a DARK surface) — the right CTA when surface is navy */
-.ggc-btn.light {
-  --b-bg: var(--ivory-50);
-  --b-fg: var(--ink-800);
-  --b-in-hi: rgba(255, 255, 255, 0.95);
-  --b-in-lo: rgba(11, 20, 55, 0.1);
-  box-shadow:
-    -5px -5px 12px rgba(95, 110, 160, 0.18),
-     7px  7px 16px rgba(0, 0, 0, 0.55),
-    inset 1px 1px 1px var(--b-in-hi),
-    inset -1px -1px 1px var(--b-in-lo);
-}
-.ggc-btn.light:hover {
-  --b-bg: var(--white);
-  color: var(--accent-600);
-  box-shadow:
-    -7px -7px 16px rgba(95, 110, 160, 0.22),
-    10px 10px 20px rgba(0, 0, 0, 0.65),
-    inset 1px 1px 1px var(--b-in-hi),
-    inset -1px -1px 1px var(--b-in-lo);
-}
-.ggc-btn.light:active {
-  box-shadow:
-    inset 5px 5px 10px rgba(11, 20, 55, 0.18),
-    inset -3px -3px 6px rgba(255, 255, 255, 0.95);
-}
-
-.ggc-btn.on-dark {
-  --b-bg: var(--ink-700);
-  --b-fg: var(--ivory-50);
-  --b-in-hi: rgba(95, 110, 160, 0.4);
-  --b-in-lo: rgba(0, 0, 0, 0.4);
-  box-shadow:
-    -5px -5px 12px rgba(95, 110, 160, 0.18),
-     7px  7px 16px rgba(0, 0, 0, 0.5),
-    inset 1px 1px 1px var(--b-in-hi),
-    inset -1px -1px 1px var(--b-in-lo);
-}
-.ggc-btn.on-dark:hover { color: var(--accent-400); }
-.ggc-btn.on-dark:active {
-  box-shadow:
-    inset  4px  4px 8px rgba(0, 0, 0, 0.55),
-    inset -3px -3px 6px rgba(95, 110, 160, 0.2);
-}
-.ggc-btn.on-dark.outline {
-  --b-bg: var(--ink-800);
-  box-shadow:
-    inset  4px  4px 8px rgba(0, 0, 0, 0.55),
-    inset -3px -3px 6px rgba(95, 110, 160, 0.2);
-}
-
-/* ── SIZES ───────────────────────────────────────────────── */
-.ggc-btn.sm { padding: 12px 22px; font-size: 11px; --b-radius: 12px; }
-.ggc-btn.lg { padding: 22px 38px; font-size: 13px; --b-radius: 20px; }
-
-/* ── DISABLED ────────────────────────────────────────────── */
-.ggc-btn:disabled,
-.ggc-btn.disabled {
+.ggc-btn:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  pointer-events: none;
-  color: var(--ink-400);
-  box-shadow: var(--shadow-1);
 }
 
-/* ── ICON BUTTON ─────────────────────────────────────────── */
-.ggc-icon-btn {
-  width: 52px; height: 52px;
-  display: inline-flex; align-items: center; justify-content: center;
-  background: var(--ivory-50);
-  color: var(--ink-800);
-  border: none;
-  border-radius: 16px;
-  cursor: pointer;
-  box-shadow:
-    -6px -6px 14px var(--neu-light),
-     8px  8px 18px var(--neu-shade),
-    inset 1px 1px 1px rgba(255,255,255,0.7),
-    inset -1px -1px 1px rgba(11,20,55,0.05);
-  transition: box-shadow var(--dur-base) var(--ease-out),
-              color var(--dur-base) var(--ease-out);
+/* Primary Button - Navy on Dark */
+.ggc-btn.primary {
+  background: var(--ink-700);
+  color: var(--ivory-100);
 }
-.ggc-icon-btn:hover { color: var(--accent-600); }
-.ggc-icon-btn:active {
-  box-shadow:
-    inset 4px 4px 8px var(--neu-shade),
-    inset -3px -3px 6px var(--neu-light);
+
+.ggc-btn.primary:hover:not(:disabled) {
+  background: var(--ink-600);
+}
+
+.ggc-btn.primary:active:not(:disabled) {
+  background: var(--ink-500);
+}
+
+/* Accent Button - Azure */
+.ggc-btn.accent {
+  background: var(--accent-600);
+  color: var(--ink-900);
+  font-weight: var(--weight-bold);
+}
+
+.ggc-btn.accent:hover:not(:disabled) {
+  background: var(--accent-500);
+}
+
+.ggc-btn.accent:active:not(:disabled) {
+  background: var(--accent-700);
+}
+
+/* Outline Button */
+.ggc-btn.outline {
+  background: transparent;
+  color: var(--ivory-100);
+  border: 1px solid var(--ink-700);
+}
+
+.ggc-btn.outline:hover:not(:disabled) {
+  background: var(--ink-800);
+  border-color: var(--ink-600);
+}
+
+.ggc-btn.outline:active:not(:disabled) {
+  background: var(--ink-700);
+}
+
+/* Ghost Button - Transparent */
+.ggc-btn.ghost {
+  background: transparent;
+  color: var(--ivory-100);
+}
+
+.ggc-btn.ghost:hover:not(:disabled) {
+  background: rgba(250, 250, 250, 0.05);
+}
+
+.ggc-btn.ghost:active:not(:disabled) {
+  background: rgba(250, 250, 250, 0.1);
+}
+
+/* Light Button - For dark backgrounds */
+.ggc-btn.light {
+  background: var(--ivory-100);
+  color: var(--ink-900);
+  font-weight: var(--weight-bold);
+}
+
+.ggc-btn.light:hover:not(:disabled) {
+  background: rgba(250, 250, 250, 0.95);
+}
+
+.ggc-btn.light:active:not(:disabled) {
+  background: var(--ivory-200);
+}
+
+/* On Dark Button - For inverse backgrounds */
+.ggc-btn.on-dark {
+  background: var(--ink-900);
+  color: var(--ivory-100);
+}
+
+.ggc-btn.on-dark:hover:not(:disabled) {
+  background: var(--ink-800);
+}
+
+.ggc-btn.on-dark:active:not(:disabled) {
+  background: var(--ink-700);
+}
+
+/* Size Variants */
+.ggc-btn.sm {
+  padding: var(--s-2) var(--s-4);
+  font-size: var(--size-body-sm);
+}
+
+.ggc-btn.lg {
+  padding: var(--s-4) var(--s-8);
+  font-size: var(--size-body-lg);
+}
+
+/* Icon Button */
+.ggc-btn.icon-only {
+  padding: var(--s-3);
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-2);
+}
+
+/* Arrow Animation */
+.ggc-btn .arrow {
+  display: inline-block;
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.ggc-btn:hover .arrow:not(:disabled) {
+  transform: translateX(4px);
 }

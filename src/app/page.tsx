@@ -1,23 +1,21 @@
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
-import Services from "@/components/sections/Services";
-import WhyGCC from "@/components/sections/WhyGCC";
-import Team from "@/components/sections/Team";
-import Contact from "@/components/sections/Contact";
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/sections/Hero';
+import Services from '@/components/sections/Services';
+import WhyGCC from '@/components/sections/WhyGCC';
+import Team from '@/components/sections/Team';
+import Contact from '@/components/sections/Contact';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <>
+    <main>
       <Navbar />
-      <main>
-        <Hero />
-        <Services />
-        <WhyGCC />
-        <Team />
-        <Contact />
-      </main>
+      <Hero />
+      <Services />
+      <WhyGCC />
+      <Team />
+      <Contact />
       <Footer />
-    </>
+    </main>
   );
 }

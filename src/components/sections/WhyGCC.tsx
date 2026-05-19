@@ -1,35 +1,97 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
+
 export default function WhyGCC() {
   const reasons = [
-    { title: "30 Years Global", text: "Three decades building trust across continents." },
-    { title: "850+ Partners", text: "Networks that span trade corridors, capital markets, and logistics hubs." },
-    { title: "$480B Traded", text: "Annual volume we move with precision and speed." },
-    { title: "24/7 Operations", text: "Someone is always awake, always ready, across time zones." },
+    {
+      title: '30+ Years Expertise',
+      description: 'Trusted by enterprises worldwide with three decades of industry experience.',
+    },
+    {
+      title: 'Global Network',
+      description: 'Direct presence in 50+ countries with local expertise and international reach.',
+    },
+    {
+      title: 'Tech-Enabled Solutions',
+      description: 'Cutting-edge technology platforms for seamless operations and transparency.',
+    },
+    {
+      title: 'Compliance Excellence',
+      description: 'Regulatory expertise ensuring smooth operations in all jurisdictions.',
+    },
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -20 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  };
+
   return (
-    <section id="why-us" style={styles.section}>
+    <section style={styles.section} id="why-ggc">
       <div style={styles.container}>
-        <span className="eyebrow">WHY GGC</span>
-        <h2 style={styles.heading}>Why global leaders choose us</h2>
-
-        <div style={styles.reasonsGrid}>
-          {reasons.map((r, i) => (
-            <div key={i} style={styles.reasonCard}>
-              <div style={styles.reasonTitle}>{r.title}</div>
-              <div style={styles.reasonText}>{r.text}</div>
-            </div>
-          ))}
-        </div>
-
-        <div style={styles.ctaSection}>
-          <h3 style={styles.ctaHeading}>Ready to simplify your supply chain?</h3>
-          <p style={styles.ctaText}>
-            Let's talk. No jargon, no sales pitch—just direct, commercial conversation.
+        {/* Header */}
+        <motion.div
+          style={styles.header}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 style={styles.title}>Why GGC</h2>
+          <p style={styles.subtitle}>
+            The trusted partner for global enterprise solutions
           </p>
-          <button className="ggc-btn accent lg">
-            Start a Conversation <span className="arrow"></span>
+        </motion.div>
+
+        {/* Reasons Grid */}
+        <motion.div
+          style={styles.grid}
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          {reasons.map((reason, index) => (
+            <motion.div key={index} style={styles.card} variants={itemVariants}>
+              <div style={styles.checkmark}>
+                <Check size={24} style={{ color: 'var(--accent-600)' }} />
+              </div>
+              <h3 style={styles.cardTitle}>{reason.title}</h3>
+              <p style={styles.cardDescription}>{reason.description}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          style={styles.cta}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <button style={{ ...styles.button, ...styles.accentButton }}>
+            Learn More About Our Approach
           </button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
@@ -37,59 +99,93 @@ export default function WhyGCC() {
 
 const styles = {
   section: {
-    backgroundColor: "var(--bg-inverse)",
-    color: "var(--fg-inverse)",
+    padding: 'var(--s-24) var(--s-4)',
+    background: 'var(--bg-secondary)',
+    position: 'relative' as const,
   } as React.CSSProperties,
+
   container: {
-    maxWidth: "1200px",
-    margin: "0 auto",
-    paddingLeft: "var(--s-6)",
-    paddingRight: "var(--s-6)",
+    maxWidth: '1200px',
+    margin: '0 auto',
   } as React.CSSProperties,
-  heading: {
-    fontSize: "var(--t-h2)",
-    marginTop: "var(--s-4)",
-    marginBottom: "var(--s-7)",
-    color: "var(--ivory-50)",
+
+  header: {
+    marginBottom: 'var(--s-20)',
+    textAlign: 'center' as const,
   } as React.CSSProperties,
-  reasonsGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-    gap: "var(--s-5)",
-    marginBottom: "var(--s-9)",
+
+  title: {
+    fontSize: 'var(--size-h1)',
+    fontWeight: 900,
+    marginBottom: 'var(--s-4)',
+    color: 'var(--ink-primary)',
   } as React.CSSProperties,
-  reasonCard: {
-    padding: "var(--s-5)",
-    backgroundColor: "var(--ink-700)",
-    borderRadius: "12px",
-    borderLeft: "3px solid var(--accent-500)",
+
+  subtitle: {
+    fontSize: 'var(--size-body-lg)',
+    color: 'var(--ink-secondary)',
+    maxWidth: '600px',
+    margin: '0 auto',
   } as React.CSSProperties,
-  reasonTitle: {
-    fontSize: "var(--t-h4)",
+
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+    gap: 'var(--s-8)',
+    marginBottom: 'var(--s-16)',
+  } as React.CSSProperties,
+
+  card: {
+    padding: 'var(--s-8)',
+    background: 'var(--bg-primary)',
+    borderRadius: 'var(--radius-3)',
+    border: '1px solid var(--ink-600)',
+    borderLeftWidth: '4px',
+    borderLeftColor: 'var(--accent-600)',
+    transition: 'all var(--duration-base) var(--ease-out)',
+  } as React.CSSProperties,
+
+  checkmark: {
+    width: '48px',
+    height: '48px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 'var(--s-4)',
+    background: 'rgba(56, 189, 248, 0.1)',
+    borderRadius: 'var(--radius-2)',
+  } as React.CSSProperties,
+
+  cardTitle: {
+    fontSize: 'var(--size-h4)',
     fontWeight: 700,
-    marginBottom: "var(--s-2)",
-    color: "var(--accent-500)",
+    marginBottom: 'var(--s-3)',
+    color: 'var(--ink-primary)',
   } as React.CSSProperties,
-  reasonText: {
-    fontSize: "var(--t-body-sm)",
-    color: "var(--fg-inverse)",
-    lineHeight: "var(--lh-body)",
+
+  cardDescription: {
+    fontSize: 'var(--size-body-sm)',
+    color: 'var(--ink-secondary)',
+    lineHeight: 1.6,
   } as React.CSSProperties,
-  ctaSection: {
-    textAlign: "center" as const,
-    paddingTop: "var(--s-8)",
-    borderTop: "1px solid var(--border-strong)",
+
+  cta: {
+    display: 'flex',
+    justifyContent: 'center',
   } as React.CSSProperties,
-  ctaHeading: {
-    fontSize: "var(--t-h3)",
-    marginBottom: "var(--s-3)",
-    color: "var(--ivory-50)",
+
+  button: {
+    padding: 'var(--s-4) var(--s-8)',
+    borderRadius: 'var(--radius-2)',
+    border: 'none',
+    fontSize: 'var(--size-body-md)',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all var(--duration-fast) var(--ease-out)',
   } as React.CSSProperties,
-  ctaText: {
-    fontSize: "var(--t-body-lg)",
-    color: "var(--fg-inverse)",
-    marginBottom: "var(--s-5)",
-    maxWidth: "500px",
-    margin: "0 auto var(--s-5)",
+
+  accentButton: {
+    background: 'var(--accent-600)',
+    color: 'var(--ink-900)',
   } as React.CSSProperties,
 };
