@@ -157,6 +157,69 @@ Skills are specialized tools that augment Claude Code workflows. Load any skill 
   - **How**: Type `/skill security-review`. The skill analyzes pending changes for OWASP top 10, injection risks, XSS, etc.
   - **Use Case**: "Check contact form inputs for security issues"
 
+**ANIMATION & MOTION:**
+
+**6. motion-framer** — Framer Motion animation library for React
+- **When**: Building interactive UI, micro-interactions, page transitions, scroll effects, drag-and-drop
+- **Installed**: Yes (comprehensive guide in `.claude/skills/motion-framer/SKILL.md`)
+- **Tech**: Framer Motion / Motion v11+ for React 18+
+- **Use case**: Hero animations, button hover effects, modal transitions, scroll-triggered animations
+- **Current usage**: Hero section with stagger animations, navbar scroll-reactivity
+- **Key concepts**:
+  - `motion` components for declarative animations
+  - `variants` for animation states
+  - `transition` for duration, timing, easing
+  - Gesture props: `whileHover`, `whileTap`, `whileDrag`, `whileFocus`
+  - Layout animations for auto-layout changes
+
+**COMPONENT GENERATION & REDESIGN:**
+
+**7. image-to-code-skill** — Convert design images/mockups to HTML/React code
+- **When**: Converting Figma designs, UI mockups, or screenshots to code
+- **Use case**: "Convert this button design to React component", "Turn this layout mockup into code"
+
+**8. imagegen-frontend-web** — Generate web UI from natural language descriptions
+- **When**: Need to generate complete web pages or sections from prompts
+- **Use case**: "Create a dashboard layout with cards and charts"
+
+**9. imagegen-frontend-mobile** — Generate mobile UI components and screens
+- **When**: Building mobile interfaces or responsive components
+- **Use case**: "Design mobile navigation drawer", "Create responsive form layout"
+
+**10. redesign-skill** — Redesign and refactor UI patterns
+- **When**: Improving existing designs, updating patterns, modernizing interfaces
+- **Use case**: "Redesign contact form for better UX", "Modernize button styles"
+
+**11. stitch-skill** — Component composition and assembly
+- **When**: Combining components, managing component composition, building complex layouts
+- **Use case**: "Assemble landing page from components", "Compose dashboard sections"
+
+**BRAND & STYLE SYSTEMS:**
+
+**12. brandkit** — Brand guidelines, design systems, and brand consistency
+- **When**: Creating/maintaining design systems, ensuring brand consistency
+- **Use case**: "Define brand color scale", "Create typography system", "Document brand guidelines"
+
+**13. gpt-tasteskill** — Enhanced taste evaluation (variant of taste-skill)
+- **When**: Advanced aesthetic evaluation and design critique
+- **Use case**: "Evaluate design composition", "Review visual balance and harmony"
+
+**AUXILIARY TOOLS:**
+
+**14. graphify** — Project structure visualization and knowledge graph mapping
+- **When**: Understanding project architecture, analyzing codebase relationships
+- **How**: `graphify .` to generate project graph, relationships, and dependencies
+- **Outputs**: Interactive graph.html, GRAPH_REPORT.md, graph.json
+- **Use case**: "Map project structure for documentation", "Visualize component relationships"
+
+**15. output-skill** — Output formatting, documentation, and report generation
+- **When**: Formatting output, generating documentation, creating reports
+- **Use case**: "Format code output", "Generate documentation", "Create style guides"
+
+**16. llms.txt** — LLM context management and file indexing
+- **When**: Managing context, creating searchable project indexes
+- **Use case**: "Create llms.txt manifest for project", "Index documentation"
+
 #### Development Setup
 - **`session-start-hook`** — Auto-run commands at session start
   - **When**: You want linting/tests to run automatically each time you spin up a web session
@@ -203,38 +266,92 @@ Skills are specialized tools that augment Claude Code workflows. Load any skill 
     - Migrate between Claude model versions
   - **Use Case**: "Add prompt caching to our API calls", "Integrate Claude AI into the contact form backend"
 
-#### Design Intelligence (Installed)
-- **`ui-ux-pro-max`** — AI-powered design system generation and UX guidance
-  - **Installed**: Yes (in `.claude/skills/ui-ux-pro-max/`)
-  - **When**: You need to design UI components, choose color palettes, review UX issues, or build new pages
-  - **How**: Use Python design system generator to analyze requirements:
-    ```bash
-    python3 .claude/skills/ui-ux-pro-max/scripts/search.py "product_type style_keywords industry" --design-system -p "Project Name"
-    ```
-  - **Resources**:
-    - 67 UI styles (neumorphism, glassmorphism, minimalism, bento grid, brutalism, etc.)
-    - 96 color palettes with accessibility guidance
-    - 57 font pairings for typography matching
-    - 99 UX guidelines (accessibility, layout, animation, responsive)
-    - 25 chart types across 13 tech stacks (React, Next.js, Vue, Svelte, SwiftUI, Flutter, Tailwind, shadcn/ui, etc.)
-  - **Example**: `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dark neumorphic trading platform" --design-system -p "GCC"`
-  - **Output**: Complete design system with pattern recommendations, color palette, typography, effects, and anti-patterns to avoid
-  - **Use Case**: "Generate design system for contact form", "Review button styling against UX guidelines", "Choose color palette matching dark neumorphic aesthetic"
+#### Design Intelligence & Aesthetics (Installed)
+
+**CORE DESIGN SKILLS (17 Total):**
+
+**1. ui-ux-pro-max** — AI-powered design system generation and UX guidance
+- **When**: Designing UI components, choosing colors/typography, reviewing UX, validating design decisions
+- **How**: Python design system generator:
+  ```bash
+  python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dark neumorphic trading platform" --design-system -p "GCC"
+  ```
+- **Resources**: 67 UI styles, 96 color palettes, 57 font pairings, 99 UX guidelines, 25 chart types
+- **Example**: "Generate design system for contact form", "Review button styling against guidelines"
+
+**2. taste-skill** — Design taste, aesthetics, and visual polish
+- **When**: Evaluating visual hierarchy, color harmony, spacing consistency, overall design quality
+- **How**: Reference SKILL.md for aesthetic principles and review checklist
+- **Covers**: Visual harmony, brand consistency, typography pairing, color psychology, composition rules
+
+**3. soft-skill** — Soft UI and neumorphism patterns (perfect for GCC's design)
+- **When**: Implementing neumorphic shadows, depth effects, subtle animations
+- **How**: Use as reference for dual-shadow techniques, padding scales, border-radius patterns
+- **Aligns with**: Current `.neu`, `.neu-sm`, `.neu-inset` CSS utilities
+
+**4. brutalist-skill** — Brutalist design (intentionally raw, minimal, functional)
+- **When**: Designing stripped-down, raw, functional interfaces (opposite of ornamental)
+- **Use case**: Can contrast with neumorphism for specific sections needing stark clarity
+
+**5. impeccable** — Code quality, maintainability, and UX excellence
+- **When**: Before commits, during code reviews, ensuring best practices
+- **How**: Check impeccable SKILL.md for code quality patterns and checks
+- **Focuses on**: Performance, accessibility, maintainability, user experience standards
+
+### Session-Start Hook
+
+When you start each session, `.claude/hooks/session-start.sh` automatically displays:
+- All 17 installed skills
+- Quick reference guide
+- Project overview (stack, design system, branch)
+
+This ensures you always know what's available.
 
 ### Recommended Workflow for This Project
 
-1. **Start of session**: Read CLAUDE.md to understand neumorphic design system and current implementation
-2. **Design decisions**: Use UI/UX Pro Max for design system validation:
-   ```bash
-   python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dark neumorphic enterprise trading" --design-system -p "GCC"
-   ```
-3. **Before making changes**: Use `/skill simplify` on any refactoring or code consolidation
-4. **After changes**: 
-   - Use `/skill security-review` for forms, inputs, and API code
-   - Use `/skill simplify` for all code changes
-5. **Before pushing**: Use `/skill review` if creating a PR
-6. **Setup automation**: Use `/skill update-config` to auto-run `npm run lint` on commit
-7. **Reduce prompts**: Use `/skill fewer-permission-prompts` after implementation to whitelist safe operations
+**0. Session Start** (Automatic)
+- Hook displays all 17 available skills
+- Review CLAUDE.md for architecture and tokens
+- Check what enhancements are needed
+
+**1. Design Decisions**
+- Validate design choices with ui-ux-pro-max:
+  ```bash
+  python3 .claude/skills/ui-ux-pro-max/scripts/search.py "dark neumorphic enterprise trade" --design-system
+  ```
+- Review aesthetic/taste alignment with taste-skill
+- Check neumorphic patterns with soft-skill
+
+**2. Component Development**
+- Reference motion-framer for animations
+- Use image-to-code-skill if converting designs
+- Apply taste-skill principles to visual polish
+- Ensure impeccable code quality
+
+**3. Before Changes**
+- Use `/skill simplify` for refactoring/consolidation
+- Check touch/hover/focus states (motion-framer + accessibility)
+
+**4. After Changes**
+- Use `/skill security-review` for forms/API code
+- Use `/skill simplify` for all code changes
+- Use `/skill impeccable` for quality standards
+- Verify responsive design (375px, 768px, 1024px, 1440px)
+
+**5. Documentation & Reporting**
+- Use graphify to visualize project structure
+- Use output-skill for documentation formatting
+- Use llms.txt for context management
+
+**6. Before Pushing**
+- Use `/skill review` if creating a PR
+- Ensure all pre-commit checks pass (lint, types, tests)
+- Verify accessibility compliance (WCAG AA minimum)
+
+**7. Quality Gates**
+- Use `/skill update-config` to setup pre-commit hooks
+- Use `/skill fewer-permission-prompts` to whitelist safe operations
+- Monitor DevTools metrics (render times, bundle size, performance)
 
 ## Common Workflows
 
@@ -274,9 +391,43 @@ Skills are specialized tools that augment Claude Code workflows. Load any skill 
 
 Site is deployed to Vercel at https://gcc-vjtw.vercel.app/. Next.js automatically builds from the repository root. Remote patterns for images are configured in `next.config.ts` (Unsplash is allowed).
 
+## Installed Skills Directory
+
+All 17 skills are in `.claude/skills/`:
+
+```
+.claude/skills/
+├── ui-ux-pro-max/          # Design system generation (PRIMARY)
+├── motion-framer/          # Framer Motion animations for React
+├── taste-skill/            # Design aesthetics and visual polish
+├── soft-skill/             # Soft UI & neumorphism patterns
+├── brutalist-skill/        # Brutalist design approach
+├── impeccable/             # Code quality and UX excellence
+├── image-to-code-skill/    # Design to code conversion
+├── imagegen-frontend-web/  # Web UI generation
+├── imagegen-frontend-mobile/ # Mobile UI generation
+├── redesign-skill/         # UI redesign and refactoring
+├── stitch-skill/           # Component composition
+├── brandkit/               # Brand guidelines and systems
+├── gpt-tasteskill/         # Enhanced taste evaluation
+├── graphify/               # Project structure visualization
+├── output-skill/           # Output formatting
+├── llms.txt/               # Context management
+└── SKILL.md files in each  # Individual documentation
+```
+
+**To access skill documentation:**
+- View any skill's guide: `cat .claude/skills/[skill-name]/SKILL.md`
+- Example: `cat .claude/skills/motion-framer/SKILL.md`
+- Python tools: `python3 .claude/skills/ui-ux-pro-max/scripts/search.py --help`
+
 ## Notes for Future Sessions
 
 - This is a **redesigned** site with a **new neumorphic design system** (dark navy + azure). The original README.md mentions gold/Playfair Display — ignore that; follow the design tokens and CSS files for the current system.
 - The Globe component is CPU-intensive (canvas + 140+ particles + animations). Monitor performance on lower-end devices.
 - Logo file: `gcc-logo-cropped.png` (332×380px, pre-cropped to remove transparent margins). Always use height-based sizing (`64px height, width: auto`) to preserve portrait aspect ratio.
 - Button render times were optimized by removing background/transform from transitions and adding `will-change`/`contain` properties. Do not add those properties back to transition definitions.
+- **17 skills are now installed and preloaded automatically** via `.claude/hooks/session-start.sh`. Each skill has a SKILL.md with detailed documentation and use cases.
+- Use `ui-ux-pro-max` as your primary design intelligence tool for all design decisions. It validates against 67 UI styles, 96 color palettes, and 99 UX guidelines.
+- `motion-framer` SKILL.md is comprehensive guide for Framer Motion — reference it when building animations.
+- For code quality, use `impeccable` skill before commits to ensure standards.

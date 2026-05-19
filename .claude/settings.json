@@ -1,0 +1,27 @@
+{
+  "tools": {
+    "bash": {
+      "permissions": ["npm", "git", "python3", "graphify"],
+      "allowedCommands": [
+        "npm run dev",
+        "npm run build",
+        "npm run lint",
+        "npm install",
+        "git status",
+        "git add",
+        "git commit",
+        "git push",
+        "git fetch",
+        "git pull",
+        "python3"
+      ]
+    }
+  },
+  "hooks": {
+    "session-start": ".claude/hooks/session-start.sh"
+  },
+  "environment": {
+    "PYTHONPATH": "./.claude/skills",
+    "TERM": "xterm-256color"
+  }
+}
