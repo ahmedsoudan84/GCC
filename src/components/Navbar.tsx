@@ -36,7 +36,10 @@ export default function Navbar() {
           <Image src="/gcc-logo-cropped.png" alt="Global Group Corp." width={332} height={380} priority />
         </Link>
 
-        <Link href="/contact" className="nav-cta">Get in Touch</Link>
+        <div className="nav-actions">
+          <Link href="/services" className="nav-cta nav-cta--secondary">Explore Services</Link>
+          <Link href="/contact" className="nav-cta">Get in Touch</Link>
+        </div>
 
         <button
           className={`nav-hamburger ${open ? 'open' : ''}`}
