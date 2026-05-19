@@ -1,176 +1,87 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
+import { motion } from 'framer-motion';
+
+const footerLinks = {
+  Services: [
+    { label: 'Trade Finance', href: '/services#trade-finance' },
+    { label: 'Logistics', href: '/services#logistics' },
+    { label: 'Capital Markets', href: '/services#capital-markets' },
+    { label: 'Compliance', href: '/services#compliance' },
+  ],
+  Company: [
+    { label: 'About', href: '/about' },
+    { label: 'Team', href: '/team' },
+    { label: 'Contact', href: '/contact' },
+  ],
+  Offices: [
+    { label: 'New York', href: '/contact' },
+    { label: 'London', href: '/contact' },
+    { label: 'Singapore', href: '/contact' },
+    { label: 'Doha', href: '/contact' },
+  ],
+};
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const year = new Date().getFullYear();
 
   return (
-    <footer style={styles.footer}>
-      <div style={styles.container}>
-        <div style={styles.grid}>
-          {/* Company Info */}
-          <div style={styles.column}>
-            <h4 style={styles.columnTitle}>Global Group Corp.</h4>
-            <p style={styles.columnText}>
-              Leading provider of trade, logistics, and capital solutions worldwide.
+    <footer style={{ background: 'var(--bg-primary)', borderTop: '1px solid rgba(83,97,232,0.1)', paddingTop: '4rem', paddingBottom: '2rem' }}>
+      <div style={{ maxWidth: '1180px', margin: '0 auto', padding: '0 clamp(1.5rem, 6vw, 6rem)' }}>
+
+        {/* Top row */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 1fr 1fr 1fr', gap: '3rem', marginBottom: '4rem' }}>
+          {/* Brand */}
+          <div>
+            <Image
+              src="/logo.jpeg"
+              alt="GGC"
+              width={110}
+              height={36}
+              style={{ filter: 'brightness(0) invert(1)', marginBottom: '1.25rem', display: 'block' }}
+            />
+            <p style={{ fontSize: '0.8125rem', lineHeight: 1.75, color: 'rgba(250,250,250,0.4)', maxWidth: '240px' }}>
+              Global Group Corp. — trade finance, logistics, and capital solutions across 150 countries since 1998.
             </p>
           </div>
 
-          {/* Services */}
-          <div style={styles.column}>
-            <h4 style={styles.columnTitle}>Services</h4>
-            <ul style={styles.list}>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Trade Finance
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Logistics
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Capital Markets
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Compliance
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div style={styles.column}>
-            <h4 style={styles.columnTitle}>Company</h4>
-            <ul style={styles.list}>
-              <li>
-                <Link href="#" style={styles.link}>
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Careers
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Press
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Legal */}
-          <div style={styles.column}>
-            <h4 style={styles.columnTitle}>Legal</h4>
-            <ul style={styles.list}>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Terms of Service
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Compliance
-                </Link>
-              </li>
-              <li>
-                <Link href="#" style={styles.link}>
-                  Cookie Policy
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {/* Link columns */}
+          {Object.entries(footerLinks).map(([group, links]) => (
+            <div key={group}>
+              <p style={{ fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(250,250,250,0.3)', marginBottom: '1.25rem', fontFamily: 'var(--font-mono)' }}>
+                {group}
+              </p>
+              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {links.map((link) => (
+                  <li key={link.label}>
+                    <Link href={link.href} style={{ fontSize: '0.8125rem', color: 'rgba(250,250,250,0.5)', textDecoration: 'none', transition: 'color 0.15s ease' }}
+                      onMouseOver={(e) => (e.currentTarget.style.color = 'var(--ivory-100)')}
+                      onMouseOut={(e) => (e.currentTarget.style.color = 'rgba(250,250,250,0.5)')}>
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Divider */}
-        <div style={styles.divider} />
-
-        {/* Copyright */}
-        <div style={styles.copyright}>
-          <p>
-            &copy; {currentYear} Global Group Corp. All rights reserved.
+        {/* Bottom bar */}
+        <div style={{ borderTop: '1px solid rgba(83,97,232,0.08)', paddingTop: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+          <p style={{ fontSize: '0.75rem', color: 'rgba(250,250,250,0.25)' }}>
+            © {year} Global Group Corp. All rights reserved.
           </p>
+          <div style={{ display: 'flex', gap: '2rem' }}>
+            {['Privacy', 'Terms', 'Compliance'].map((item) => (
+              <Link key={item} href="#" style={{ fontSize: '0.75rem', color: 'rgba(250,250,250,0.25)', textDecoration: 'none' }}>
+                {item}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
   );
 }
-
-const styles = {
-  footer: {
-    background: 'var(--bg-primary)',
-    borderTop: '1px solid var(--ink-700)',
-    padding: 'var(--s-16) var(--s-4)',
-  } as React.CSSProperties,
-
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-  } as React.CSSProperties,
-
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-    gap: 'var(--s-12)',
-    marginBottom: 'var(--s-12)',
-  } as React.CSSProperties,
-
-  column: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: 'var(--s-4)',
-  } as React.CSSProperties,
-
-  columnTitle: {
-    fontSize: 'var(--size-body-md)',
-    fontWeight: 700,
-    color: 'var(--ink-primary)',
-  } as React.CSSProperties,
-
-  columnText: {
-    fontSize: 'var(--size-body-sm)',
-    color: 'var(--ink-secondary)',
-    lineHeight: 1.6,
-  } as React.CSSProperties,
-
-  list: {
-    listStyle: 'none',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: 'var(--s-3)',
-  } as React.CSSProperties,
-
-  link: {
-    fontSize: 'var(--size-body-sm)',
-    color: 'var(--ink-secondary)',
-    textDecoration: 'none',
-    transition: 'color var(--duration-fast) var(--ease-out)',
-  } as React.CSSProperties,
-
-  divider: {
-    height: '1px',
-    background: 'var(--ink-700)',
-    marginBottom: 'var(--s-8)',
-  } as React.CSSProperties,
-
-  copyright: {
-    textAlign: 'center' as const,
-  } as React.CSSProperties,
-};

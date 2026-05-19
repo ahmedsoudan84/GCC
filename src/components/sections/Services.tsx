@@ -1,164 +1,141 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { TrendingUp, Truck, Zap, Shield } from 'lucide-react';
+import Link from 'next/link';
+import { TrendingUp, Truck, BarChart3, Shield, ArrowRight } from 'lucide-react';
+
+const services = [
+  {
+    icon: TrendingUp,
+    title: 'Trade Finance',
+    description: 'Letters of credit, supply chain finance, and commodity-backed instruments across 200+ banking partners.',
+    stat: '$240B+',
+    statLabel: 'Financed annually',
+  },
+  {
+    icon: Truck,
+    title: 'Logistics & Supply Chain',
+    description: 'Multi-modal freight management with real-time tracking across 150 countries and 18 carrier partners.',
+    stat: '12M+',
+    statLabel: 'Shipments per year',
+  },
+  {
+    icon: BarChart3,
+    title: 'Capital Markets',
+    description: 'Cross-border debt structuring, project finance, and trade-related bond placement for mid and large-cap enterprises.',
+    stat: '$120B+',
+    statLabel: 'Capital arranged',
+  },
+  {
+    icon: Shield,
+    title: 'Customs & Compliance',
+    description: 'Real-time sanctions screening, AML/KYC due diligence, and regulatory strategy across 47 jurisdictions.',
+    stat: '99.97%',
+    statLabel: 'Compliance rate',
+  },
+];
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+};
 
 export default function Services() {
-  const services = [
-    {
-      icon: TrendingUp,
-      title: 'Trade Finance',
-      description: 'Comprehensive financing solutions for international trade, including LC and guarantee services.',
-    },
-    {
-      icon: Truck,
-      title: 'Logistics & Supply Chain',
-      description: 'End-to-end logistics management with real-time tracking and optimization.',
-    },
-    {
-      icon: Zap,
-      title: 'Capital Markets',
-      description: 'Strategic capital solutions and investment management for growth initiatives.',
-    },
-    {
-      icon: Shield,
-      title: 'Customs & Compliance',
-      description: 'Expert navigation of regulatory requirements across all jurisdictions.',
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
-
   return (
-    <section style={styles.section} id="services">
-      <div style={styles.container}>
+    <section className="section" style={{ background: 'var(--bg-primary)' }} id="services">
+      <div className="section-inner">
         {/* Header */}
         <motion.div
-          style={styles.header}
+          style={{ marginBottom: '3.5rem' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 style={styles.title}>Our Services</h2>
-          <p style={styles.subtitle}>
-            Comprehensive solutions designed for modern enterprise needs
+          <p className="section-eyebrow">What We Do</p>
+          <h2 className="section-headline">Six lines. One integrated group.</h2>
+          <p className="section-subheadline">
+            From the moment a deal is structured to the moment goods arrive at port,
+            GGC provides every layer of support that enterprise-scale trade demands.
           </p>
+          <div className="section-divider" />
         </motion.div>
 
-        {/* Services Grid */}
+        {/* Grid */}
         <motion.div
-          style={styles.grid}
+          className="grid-4"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: '-60px' }}
         >
-          {services.map((service, index) => {
+          {services.map((service) => {
             const Icon = service.icon;
             return (
-              <motion.div key={index} style={styles.card} variants={itemVariants}>
-                <div style={styles.iconContainer}>
-                  <Icon size={32} style={{ color: 'var(--accent-600)' }} />
+              <motion.div
+                key={service.title}
+                variants={cardVariants}
+                className="neu-card"
+                whileHover={{ y: -4, transition: { duration: 0.2 } }}
+                style={{ cursor: 'default' }}
+              >
+                {/* Icon */}
+                <motion.div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '12px',
+                    background: 'rgba(56,189,248,0.08)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    marginBottom: '1.5rem',
+                    boxShadow: '4px 4px 10px #070e28, -4px -4px 10px #0f1a46',
+                  }}
+                  whileHover={{ rotate: [0, -8, 8, 0], transition: { duration: 0.4 } }}
+                >
+                  <Icon size={22} style={{ color: 'var(--accent-600)' }} />
+                </motion.div>
+
+                <h3 style={{ fontSize: '1.0625rem', fontWeight: 600, color: 'var(--ivory-100)', marginBottom: '0.6rem', letterSpacing: '-0.01em' }}>
+                  {service.title}
+                </h3>
+                <p style={{ fontSize: '0.8125rem', lineHeight: 1.7, color: 'rgba(250,250,250,0.45)', marginBottom: '1.5rem' }}>
+                  {service.description}
+                </p>
+
+                {/* Stat */}
+                <div style={{ borderTop: '1px solid rgba(83,97,232,0.15)', paddingTop: '1rem' }}>
+                  <span style={{ fontSize: '1.25rem', fontWeight: 600, color: 'var(--accent-600)', letterSpacing: '-0.02em', display: 'block' }}>
+                    {service.stat}
+                  </span>
+                  <span style={{ fontSize: '0.6875rem', color: 'rgba(250,250,250,0.35)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                    {service.statLabel}
+                  </span>
                 </div>
-                <h3 style={styles.cardTitle}>{service.title}</h3>
-                <p style={styles.cardDescription}>{service.description}</p>
               </motion.div>
             );
           })}
+        </motion.div>
+
+        {/* CTA */}
+        <motion.div
+          style={{ marginTop: '3rem', textAlign: 'center' }}
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Link href="/services" className="ggc-btn primary" style={{ textDecoration: 'none' }}>
+            View All Services <span className="arrow">→</span>
+          </Link>
         </motion.div>
       </div>
     </section>
   );
 }
-
-const styles = {
-  section: {
-    padding: 'var(--s-24) var(--s-4)',
-    background: 'var(--bg-primary)',
-    position: 'relative' as const,
-  } as React.CSSProperties,
-
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-  } as React.CSSProperties,
-
-  header: {
-    marginBottom: 'var(--s-20)',
-    textAlign: 'center' as const,
-  } as React.CSSProperties,
-
-  title: {
-    fontSize: 'var(--size-h1)',
-    fontWeight: 900,
-    marginBottom: 'var(--s-4)',
-    color: 'var(--ink-primary)',
-  } as React.CSSProperties,
-
-  subtitle: {
-    fontSize: 'var(--size-body-lg)',
-    color: 'var(--ink-secondary)',
-    maxWidth: '600px',
-    margin: '0 auto',
-  } as React.CSSProperties,
-
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-    gap: 'var(--s-8)',
-  } as React.CSSProperties,
-
-  card: {
-    padding: 'var(--s-8)',
-    background: 'var(--bg-secondary)',
-    borderRadius: 'var(--radius-3)',
-    border: '1px solid var(--ink-700)',
-    transition: 'all var(--duration-base) var(--ease-out)',
-    cursor: 'pointer',
-  } as React.CSSProperties,
-
-  iconContainer: {
-    width: '56px',
-    height: '56px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 'var(--s-4)',
-    background: 'rgba(56, 189, 248, 0.1)',
-    borderRadius: 'var(--radius-2)',
-  } as React.CSSProperties,
-
-  cardTitle: {
-    fontSize: 'var(--size-h4)',
-    fontWeight: 700,
-    marginBottom: 'var(--s-3)',
-    color: 'var(--ink-primary)',
-  } as React.CSSProperties,
-
-  cardDescription: {
-    fontSize: 'var(--size-body-sm)',
-    color: 'var(--ink-secondary)',
-    lineHeight: 1.6,
-  } as React.CSSProperties,
-};

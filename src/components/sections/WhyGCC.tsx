@@ -1,191 +1,152 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Check } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+
+const pillars = [
+  {
+    number: '01',
+    title: 'Integrated by design',
+    body: 'Most trade firms do one thing. GGC does everything — finance, logistics, compliance, capital markets — as a single coordinated offering. Your deal doesn\'t fall through the cracks between vendors.',
+  },
+  {
+    number: '02',
+    title: '30 years of relationships',
+    body: 'Every corridor we operate in was built through long-term relationships. Our network of banks, carriers, regulators, and buyers is proprietary — and it opens doors that pure-play competitors cannot.',
+  },
+  {
+    number: '03',
+    title: 'Technology that works in the real world',
+    body: 'TradeOS digitalises your entire deal cycle — documents, compliance, payments, tracking — without replacing the human judgment that complex trade demands.',
+  },
+  {
+    number: '04',
+    title: 'Compliance without friction',
+    body: 'Our in-house sanctions and compliance team has navigated every major regulatory event of the past decade with zero enforcement actions. We protect your business and keep deals moving.',
+  },
+];
+
+const containerVariants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, x: -20 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6 } },
+};
 
 export default function WhyGCC() {
-  const reasons = [
-    {
-      title: '30+ Years Expertise',
-      description: 'Trusted by enterprises worldwide with three decades of industry experience.',
-    },
-    {
-      title: 'Global Network',
-      description: 'Direct presence in 50+ countries with local expertise and international reach.',
-    },
-    {
-      title: 'Tech-Enabled Solutions',
-      description: 'Cutting-edge technology platforms for seamless operations and transparency.',
-    },
-    {
-      title: 'Compliance Excellence',
-      description: 'Regulatory expertise ensuring smooth operations in all jurisdictions.',
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: {
-      opacity: 1,
-      x: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
-  };
-
   return (
-    <section style={styles.section} id="why-ggc">
-      <div style={styles.container}>
-        {/* Header */}
-        <motion.div
-          style={styles.header}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 style={styles.title}>Why GGC</h2>
-          <p style={styles.subtitle}>
-            The trusted partner for global enterprise solutions
-          </p>
-        </motion.div>
+    <section className="section" style={{ background: 'var(--bg-secondary)' }} id="why-ggc">
+      <div className="section-inner">
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '5rem', alignItems: 'start' }}>
 
-        {/* Reasons Grid */}
-        <motion.div
-          style={styles.grid}
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-        >
-          {reasons.map((reason, index) => (
-            <motion.div key={index} style={styles.card} variants={itemVariants}>
-              <div style={styles.checkmark}>
-                <Check size={24} style={{ color: 'var(--accent-600)' }} />
-              </div>
-              <h3 style={styles.cardTitle}>{reason.title}</h3>
-              <p style={styles.cardDescription}>{reason.description}</p>
+          {/* Left – image + stat callouts */}
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <div style={{ position: 'relative', borderRadius: '16px', overflow: 'hidden', aspectRatio: '3/4', boxShadow: '12px 12px 30px #060c22, -12px -12px 30px #111c50', marginBottom: '2rem' }}>
+              <Image
+                src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80"
+                alt="Global operations"
+                fill
+                style={{ objectFit: 'cover' }}
+                sizes="(max-width: 900px) 100vw, 50vw"
+              />
+              <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(11,20,55,0.8) 0%, transparent 50%)' }} />
+            </div>
+
+            {/* Stat overlay cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+              {[
+                { value: '150+', label: 'Countries' },
+                { value: '850+', label: 'Partners' },
+                { value: '4', label: 'Global Offices' },
+                { value: '24/7', label: 'Operations' },
+              ].map((stat) => (
+                <motion.div
+                  key={stat.label}
+                  className="neu-card"
+                  style={{ padding: '1.25rem', textAlign: 'center' }}
+                  whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                >
+                  <div style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--accent-600)', letterSpacing: '-0.02em', marginBottom: '0.25rem' }}>
+                    {stat.value}
+                  </div>
+                  <div style={{ fontSize: '0.6875rem', color: 'rgba(250,250,250,0.4)', letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* Right – pillars */}
+          <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              style={{ marginBottom: '2.5rem' }}
+            >
+              <p className="section-eyebrow">Why GGC</p>
+              <h2 className="section-headline">Why the world's top enterprises choose us</h2>
+              <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: 'rgba(250,250,250,0.5)' }}>
+                In a market full of brokers and advisors, GGC is the partner that executes.
+                Here's why that distinction matters.
+              </p>
             </motion.div>
-          ))}
-        </motion.div>
 
-        {/* CTA */}
-        <motion.div
-          style={styles.cta}
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <button style={{ ...styles.button, ...styles.accentButton }}>
-            Learn More About Our Approach
-          </button>
-        </motion.div>
+            <motion.div
+              style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {pillars.map((pillar) => (
+                <motion.div
+                  key={pillar.number}
+                  variants={itemVariants}
+                  className="neu-card"
+                  style={{ display: 'flex', gap: '1.25rem', alignItems: 'flex-start', padding: '1.5rem' }}
+                  whileHover={{ x: 4, transition: { duration: 0.2 } }}
+                >
+                  <span style={{ fontSize: '0.6875rem', fontWeight: 700, color: 'var(--accent-600)', letterSpacing: '0.05em', fontFamily: 'var(--font-mono)', flexShrink: 0, paddingTop: '0.15rem' }}>
+                    {pillar.number}
+                  </span>
+                  <div>
+                    <h3 style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--ivory-100)', marginBottom: '0.4rem', letterSpacing: '-0.01em' }}>
+                      {pillar.title}
+                    </h3>
+                    <p style={{ fontSize: '0.8125rem', lineHeight: 1.7, color: 'rgba(250,250,250,0.45)' }}>
+                      {pillar.body}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <motion.div
+              style={{ marginTop: '2rem' }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              <Link href="/about" className="ggc-btn primary" style={{ textDecoration: 'none' }}>
+                About GGC <span className="arrow">→</span>
+              </Link>
+            </motion.div>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-
-const styles = {
-  section: {
-    padding: 'var(--s-24) var(--s-4)',
-    background: 'var(--bg-secondary)',
-    position: 'relative' as const,
-  } as React.CSSProperties,
-
-  container: {
-    maxWidth: '1200px',
-    margin: '0 auto',
-  } as React.CSSProperties,
-
-  header: {
-    marginBottom: 'var(--s-20)',
-    textAlign: 'center' as const,
-  } as React.CSSProperties,
-
-  title: {
-    fontSize: 'var(--size-h1)',
-    fontWeight: 900,
-    marginBottom: 'var(--s-4)',
-    color: 'var(--ink-primary)',
-  } as React.CSSProperties,
-
-  subtitle: {
-    fontSize: 'var(--size-body-lg)',
-    color: 'var(--ink-secondary)',
-    maxWidth: '600px',
-    margin: '0 auto',
-  } as React.CSSProperties,
-
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-    gap: 'var(--s-8)',
-    marginBottom: 'var(--s-16)',
-  } as React.CSSProperties,
-
-  card: {
-    padding: 'var(--s-8)',
-    background: 'var(--bg-primary)',
-    borderRadius: 'var(--radius-3)',
-    border: '1px solid var(--ink-600)',
-    borderLeftWidth: '4px',
-    borderLeftColor: 'var(--accent-600)',
-    transition: 'all var(--duration-base) var(--ease-out)',
-  } as React.CSSProperties,
-
-  checkmark: {
-    width: '48px',
-    height: '48px',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 'var(--s-4)',
-    background: 'rgba(56, 189, 248, 0.1)',
-    borderRadius: 'var(--radius-2)',
-  } as React.CSSProperties,
-
-  cardTitle: {
-    fontSize: 'var(--size-h4)',
-    fontWeight: 700,
-    marginBottom: 'var(--s-3)',
-    color: 'var(--ink-primary)',
-  } as React.CSSProperties,
-
-  cardDescription: {
-    fontSize: 'var(--size-body-sm)',
-    color: 'var(--ink-secondary)',
-    lineHeight: 1.6,
-  } as React.CSSProperties,
-
-  cta: {
-    display: 'flex',
-    justifyContent: 'center',
-  } as React.CSSProperties,
-
-  button: {
-    padding: 'var(--s-4) var(--s-8)',
-    borderRadius: 'var(--radius-2)',
-    border: 'none',
-    fontSize: 'var(--size-body-md)',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all var(--duration-fast) var(--ease-out)',
-  } as React.CSSProperties,
-
-  accentButton: {
-    background: 'var(--accent-600)',
-    color: 'var(--ink-900)',
-  } as React.CSSProperties,
-};

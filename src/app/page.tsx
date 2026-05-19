@@ -2,8 +2,8 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/sections/Hero';
 import Services from '@/components/sections/Services';
 import WhyGCC from '@/components/sections/WhyGCC';
+import Testimonials from '@/components/sections/Testimonials';
 import Team from '@/components/sections/Team';
-import Contact from '@/components/sections/Contact';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -13,8 +13,8 @@ export default function Home() {
       <Hero />
       <Services />
       <WhyGCC />
+      <Testimonials />
       <Team />
-      <Contact />
       <Footer />
     </main>
   );

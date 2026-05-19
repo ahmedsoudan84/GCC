@@ -1,56 +1,100 @@
-/* Navbar Styles */
+/* ─── Navbar ──────────────────────────────────────────────── */
 .navbar-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
   width: 100%;
 }
 
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: var(--s-4);
-  background: var(--bg-primary);
-  border-bottom: 1px solid var(--ink-700);
-  backdrop-filter: blur(10px);
-  background-color: rgba(11, 20, 55, 0.95);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+  justify-content: space-between;
+  padding: var(--s-4) clamp(var(--s-6), 6vw, var(--s-16));
+  background: rgba(11, 20, 55, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(83, 97, 232, 0.12);
 }
 
+/* Logo */
 .navbar-logo {
   display: flex;
   align-items: center;
-  z-index: 10;
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 .navbar-logo img {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-2);
+  width: 120px;
+  height: auto;
+  filter: brightness(0) invert(1);
+  display: block;
+  object-fit: contain;
 }
 
+/* Desktop nav strip below logo bar */
 .navbar-desktop {
   display: flex;
+  align-items: center;
   justify-content: center;
-  gap: var(--s-8);
-  padding: var(--s-4) var(--s-6);
-  background: var(--bg-secondary);
-  border-bottom: 1px solid var(--ink-700);
-  width: 100%;
+  gap: var(--s-10);
+  padding: var(--s-3) clamp(var(--s-6), 6vw, var(--s-16));
+  background: rgba(11, 20, 55, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(83, 97, 232, 0.08);
 }
 
 .navbar-link {
-  font-size: var(--size-body-md);
+  font-size: 0.8125rem;
   font-weight: 500;
-  color: var(--ink-primary);
-  transition: all var(--duration-fast) var(--ease-out);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(250, 250, 250, 0.6);
   text-decoration: none;
+  position: relative;
+  transition: color 0.2s ease;
+  padding: var(--s-1) 0;
+}
+
+.navbar-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--accent-600);
+  transition: width 0.25s ease;
 }
 
 .navbar-link:hover {
-  color: var(--accent-600);
+  color: var(--ivory-100);
 }
 
+.navbar-link:hover::after {
+  width: 100%;
+}
+
+/* Desktop CTA in nav */
+.navbar-cta {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--ink-900);
+  background: var(--accent-600);
+  border-radius: 4px;
+  padding: 0.4rem 1rem;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.navbar-cta:hover {
+  opacity: 0.85;
+}
+
+/* Mobile toggle */
 .navbar-mobile-button {
   background: transparent;
   border: none;
@@ -59,35 +103,38 @@
   display: none;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  color: var(--ivory-100);
 }
 
+/* Mobile menu */
 .navbar-mobile {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: var(--bg-secondary);
   display: flex;
   flex-direction: column;
-  padding: var(--s-4);
-  gap: var(--s-3);
-  border-bottom: 1px solid var(--ink-700);
+  background: rgba(11, 20, 55, 0.98);
+  border-bottom: 1px solid rgba(83, 97, 232, 0.12);
+  padding: var(--s-4) clamp(var(--s-6), 6vw, var(--s-16));
+  gap: var(--s-1);
 }
 
 .navbar-mobile-link {
-  font-size: var(--size-body-md);
-  color: var(--ink-primary);
-  padding: var(--s-3) var(--s-4);
-  transition: all var(--duration-fast) var(--ease-out);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: rgba(250, 250, 250, 0.7);
   text-decoration: none;
+  padding: var(--s-3) 0;
+  border-bottom: 1px solid rgba(83, 97, 232, 0.08);
+  transition: color 0.15s ease;
+}
+
+.navbar-mobile-link:last-child {
+  border-bottom: none;
 }
 
 .navbar-mobile-link:hover {
-  background: rgba(250, 250, 250, 0.05);
-  border-radius: var(--radius-2);
+  color: var(--ivory-100);
 }
 
+/* ─── Responsive ───────────────────────────────────────────── */
 @media (max-width: 768px) {
   .navbar-desktop {
     display: none;
@@ -96,10 +143,18 @@
   .navbar-mobile-button {
     display: flex;
   }
+
+  .navbar-cta-desktop {
+    display: none;
+  }
+
+  .navbar-logo img {
+    width: 90px;
+  }
 }
 
 @media (min-width: 769px) {
   .navbar-mobile {
-    display: none;
+    display: none !important;
   }
 }

@@ -1,107 +1,155 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
+import Link from 'next/link';
 import Globe from '../Globe';
 
-export default function Hero() {
-  const [showContent, setShowContent] = useState(false);
+function AnimatedStat({ value, label }: { value: string; label: string }) {
+  const [displayed, setDisplayed] = useState('0');
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowContent(true);
-    }, 500);
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
 
-    return () => clearTimeout(timer);
+    const numericPart = parseFloat(value.replace(/[^0-9.]/g, ''));
+    const suffix = value.replace(/[0-9.]/g, '');
+    let start = 0;
+    const duration = 1800;
+    const startTime = performance.now();
+
+    const tick = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = start + (numericPart - start) * eased;
+      const formatted = numericPart >= 100 ? Math.round(current).toLocaleString() : current.toFixed(numericPart < 10 ? 0 : 0);
+      setDisplayed(formatted + suffix);
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+
+    setTimeout(() => requestAnimationFrame(tick), 600);
+  }, [value]);
+
+  return (
+    <div style={statStyles.item}>
+      <span style={statStyles.value}>{displayed}</span>
+      <span style={statStyles.label}>{label}</span>
+    </div>
+  );
+}
+
+const statStyles = {
+  item: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: '4px',
+  },
+  value: {
+    fontSize: 'clamp(1.5rem, 3vw, 2rem)',
+    fontWeight: 600,
+    color: 'var(--accent-600)',
+    letterSpacing: '-0.02em',
+    fontFamily: 'var(--font-display)',
+  },
+  label: {
+    fontSize: '0.65rem',
+    fontWeight: 500,
+    letterSpacing: '0.1em',
+    textTransform: 'uppercase' as const,
+    color: 'rgba(250,250,250,0.45)',
+  },
+};
+
+export default function Hero() {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 200);
+    return () => clearTimeout(t);
   }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.12, delayChildren: 0.3 },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-      },
-    },
+    hidden: { opacity: 0, y: 28 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
   };
 
   return (
     <section style={styles.section}>
-      {/* Globe Background Animation */}
-      <motion.div
-        style={styles.globeContainer}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: showContent ? 0.4 : 1, scale: 1 }}
-        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-      >
-        <Globe />
-      </motion.div>
+      {/* Full-screen globe background */}
+      <Globe fullscreen />
 
-      {/* Content */}
+      {/* Dark gradient overlay so text is readable */}
+      <div style={styles.overlay} />
+
+      {/* Hero content */}
       <motion.div
         style={styles.content}
         variants={containerVariants}
         initial="hidden"
-        animate={showContent ? 'visible' : 'hidden'}
+        animate={ready ? 'visible' : 'hidden'}
       >
         {/* Eyebrow */}
-        <motion.div style={styles.eyebrow} variants={itemVariants}>
-          <span style={styles.eyebrowText}>EST 1998 • NEW YORK • SINGAPORE • LONDON</span>
-        </motion.div>
+        <motion.p style={styles.eyebrow} variants={itemVariants}>
+          EST. 1998 &nbsp;·&nbsp; NEW YORK &nbsp;·&nbsp; LONDON &nbsp;·&nbsp; SINGAPORE &nbsp;·&nbsp; DOHA
+        </motion.p>
 
         {/* Headline */}
         <motion.h1 style={styles.headline} variants={itemVariants}>
-          Global Trade &<br />
-          <span style={styles.accent}>Capital Solutions</span>
+          The Global Standard<br />
+          in <span style={styles.accent}>Trade & Capital</span>
         </motion.h1>
 
         {/* Description */}
         <motion.p style={styles.description} variants={itemVariants}>
-          We provide comprehensive trade finance, logistics, and capital solutions
-          for enterprises across 150+ countries.
+          From commodity finance to cross-border logistics, GGC connects enterprise
+          with the world's most critical trade corridors — across 150 countries
+          and six decades of combined expertise.
         </motion.p>
 
         {/* CTA Buttons */}
-        <motion.div style={styles.buttonGroup} variants={itemVariants}>
-          <button style={{ ...styles.button, ...styles.accentButton }}>
-            Schedule a Call
-          </button>
-          <button style={{ ...styles.button, ...styles.outlineButton }}>
-            View Our Network
-          </button>
+        <motion.div style={styles.buttons} variants={itemVariants}>
+          <Link href="/contact" style={styles.btnAccent}>
+            Schedule a Consultation
+          </Link>
+          <Link href="/services" style={styles.btnOutline}>
+            Explore Services
+          </Link>
         </motion.div>
 
-        {/* Stats */}
-        <motion.div style={styles.stats} variants={itemVariants}>
-          <div style={styles.stat}>
-            <div style={styles.statValue}>$480B+</div>
-            <div style={styles.statLabel}>Trade Volume</div>
-          </div>
-          <div style={styles.stat}>
-            <div style={styles.statValue}>850+</div>
-            <div style={styles.statLabel}>Partners</div>
-          </div>
-          <div style={styles.stat}>
-            <div style={styles.statValue}>12M+</div>
-            <div style={styles.statLabel}>Shipments</div>
-          </div>
-          <div style={styles.stat}>
-            <div style={styles.statValue}>30+</div>
-            <div style={styles.statLabel}>Years</div>
+        {/* Stats bar */}
+        <motion.div style={styles.statsBar} variants={itemVariants}>
+          <div style={styles.statsDivider} />
+          <div style={styles.statsGrid}>
+            <AnimatedStat value="$480B+" label="Annual Trade Volume" />
+            <AnimatedStat value="850+" label="Global Partners" />
+            <AnimatedStat value="12M+" label="Shipments Handled" />
+            <AnimatedStat value="30+" label="Years Operating" />
           </div>
         </motion.div>
+      </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        style={styles.scrollIndicator}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: ready ? 1 : 0 }}
+        transition={{ delay: 1.8 }}
+      >
+        <motion.div
+          style={styles.scrollDot}
+          animate={{ y: [0, 8, 0] }}
+          transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+        />
       </motion.div>
     </section>
   );
@@ -113,48 +161,44 @@ const styles = {
     minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
-    padding: 'var(--s-20) var(--s-4)',
-    background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%)',
+    justifyContent: 'flex-start',
     overflow: 'hidden',
+    background: 'var(--bg-primary)',
   } as React.CSSProperties,
 
-  globeContainer: {
+  overlay: {
     position: 'absolute' as const,
-    right: '-10%',
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '500px',
-    height: '500px',
-    opacity: 0.4,
+    inset: 0,
+    background:
+      'linear-gradient(105deg, rgba(11,20,55,0.92) 0%, rgba(11,20,55,0.75) 50%, rgba(11,20,55,0.3) 100%)',
     zIndex: 1,
   } as React.CSSProperties,
 
   content: {
-    maxWidth: '700px',
-    zIndex: 10,
     position: 'relative' as const,
+    zIndex: 2,
+    maxWidth: '680px',
+    padding: 'var(--s-20) clamp(var(--s-6), 6vw, var(--s-24))',
   } as React.CSSProperties,
 
   eyebrow: {
-    marginBottom: 'var(--s-6)',
-  } as React.CSSProperties,
-
-  eyebrowText: {
-    fontSize: 'var(--size-eyebrow)',
+    fontSize: '0.6rem',
     fontWeight: 600,
-    letterSpacing: 'var(--tracking-loose)',
+    letterSpacing: '0.18em',
+    textTransform: 'uppercase' as const,
     color: 'var(--accent-600)',
-    textTransform: 'uppercase',
+    marginBottom: 'var(--s-6)',
+    fontFamily: 'var(--font-mono)',
   } as React.CSSProperties,
 
   headline: {
-    fontSize: 'clamp(2rem, 6vw, 3.5rem)',
-    fontWeight: 900,
-    letterSpacing: 'var(--tracking-tight)',
-    lineHeight: 1.2,
-    color: 'var(--ink-primary)',
+    fontSize: 'clamp(2.4rem, 5.5vw, 3.8rem)',
+    fontWeight: 600,
+    letterSpacing: '-0.03em',
+    lineHeight: 1.12,
+    color: 'var(--ivory-100)',
     marginBottom: 'var(--s-6)',
+    fontFamily: 'var(--font-display)',
   } as React.CSSProperties,
 
   accent: {
@@ -162,63 +206,86 @@ const styles = {
   } as React.CSSProperties,
 
   description: {
-    fontSize: 'var(--size-body-lg)',
-    color: 'var(--ink-secondary)',
-    lineHeight: 1.6,
-    marginBottom: 'var(--s-8)',
-    maxWidth: '600px',
+    fontSize: '1rem',
+    fontWeight: 400,
+    lineHeight: 1.7,
+    color: 'rgba(250,250,250,0.6)',
+    maxWidth: '520px',
+    marginBottom: 'var(--s-10)',
   } as React.CSSProperties,
 
-  buttonGroup: {
+  buttons: {
     display: 'flex',
     gap: 'var(--s-4)',
+    flexWrap: 'wrap' as const,
     marginBottom: 'var(--s-12)',
-    flexWrap: 'wrap',
   } as React.CSSProperties,
 
-  button: {
-    padding: 'var(--s-4) var(--s-8)',
-    borderRadius: 'var(--radius-2)',
-    border: 'none',
-    fontSize: 'var(--size-body-md)',
-    fontWeight: 600,
-    cursor: 'pointer',
-    transition: 'all var(--duration-fast) var(--ease-out)',
-  } as React.CSSProperties,
-
-  accentButton: {
+  btnAccent: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '0.75rem 1.75rem',
     background: 'var(--accent-600)',
     color: 'var(--ink-900)',
+    borderRadius: '6px',
+    fontSize: '0.875rem',
+    fontWeight: 600,
+    letterSpacing: '0.01em',
+    textDecoration: 'none',
+    fontFamily: 'var(--font-display)',
+    transition: 'opacity 0.15s ease',
   } as React.CSSProperties,
 
-  outlineButton: {
+  btnOutline: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    padding: '0.75rem 1.75rem',
     background: 'transparent',
-    color: 'var(--ink-primary)',
-    border: '1px solid var(--ink-700)',
+    color: 'var(--ivory-100)',
+    border: '1px solid rgba(250,250,250,0.2)',
+    borderRadius: '6px',
+    fontSize: '0.875rem',
+    fontWeight: 500,
+    letterSpacing: '0.01em',
+    textDecoration: 'none',
+    fontFamily: 'var(--font-display)',
+    transition: 'border-color 0.15s ease, background 0.15s ease',
   } as React.CSSProperties,
 
-  stats: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-    gap: 'var(--s-8)',
-  } as React.CSSProperties,
-
-  stat: {
+  statsBar: {
     display: 'flex',
     flexDirection: 'column' as const,
+    gap: 'var(--s-5)',
+  } as React.CSSProperties,
+
+  statsDivider: {
+    height: '1px',
+    background: 'rgba(250,250,250,0.1)',
+    width: '100%',
+  } as React.CSSProperties,
+
+  statsGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(4, auto)',
+    gap: 'var(--s-8)',
+    justifyContent: 'start',
+  } as React.CSSProperties,
+
+  scrollIndicator: {
+    position: 'absolute' as const,
+    bottom: 'var(--s-8)',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 2,
+    display: 'flex',
+    flexDirection: 'column' as const,
+    alignItems: 'center',
     gap: 'var(--s-2)',
   } as React.CSSProperties,
 
-  statValue: {
-    fontSize: 'var(--size-h2)',
-    fontWeight: 900,
-    color: 'var(--accent-600)',
-  } as React.CSSProperties,
-
-  statLabel: {
-    fontSize: 'var(--size-body-sm)',
-    color: 'var(--ink-tertiary)',
-    textTransform: 'uppercase',
-    letterSpacing: 'var(--tracking-loose)',
+  scrollDot: {
+    width: '1px',
+    height: '48px',
+    background: 'linear-gradient(to bottom, transparent, var(--accent-600))',
   } as React.CSSProperties,
 };
