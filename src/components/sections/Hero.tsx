@@ -1,291 +1,269 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import Globe from '../Globe';
 
-function AnimatedStat({ value, label }: { value: string; label: string }) {
-  const [displayed, setDisplayed] = useState('0');
-  const hasAnimated = useRef(false);
+/* Animated number counter */
+function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {
+  const [val, setVal] = useState(0);
+  const started = useRef(false);
 
   useEffect(() => {
-    if (hasAnimated.current) return;
-    hasAnimated.current = true;
-
-    const numericPart = parseFloat(value.replace(/[^0-9.]/g, ''));
-    const suffix = value.replace(/[0-9.]/g, '');
-    let start = 0;
-    const duration = 1800;
-    const startTime = performance.now();
-
-    const tick = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const current = start + (numericPart - start) * eased;
-      const formatted = numericPart >= 100 ? Math.round(current).toLocaleString() : current.toFixed(numericPart < 10 ? 0 : 0);
-      setDisplayed(formatted + suffix);
-      if (progress < 1) requestAnimationFrame(tick);
+    if (started.current) return;
+    started.current = true;
+    const dur = 1600, fps = 60;
+    const frames = Math.round((dur / 1000) * fps);
+    let f = 0;
+    const step = () => {
+      f++;
+      const p = f / frames;
+      const eased = 1 - Math.pow(1 - p, 3);
+      setVal(Math.round(eased * to));
+      if (f < frames) requestAnimationFrame(step);
     };
+    setTimeout(() => requestAnimationFrame(step), 800);
+  }, [to]);
 
-    setTimeout(() => requestAnimationFrame(tick), 600);
-  }, [value]);
-
-  return (
-    <div style={statStyles.item}>
-      <span style={statStyles.value}>{displayed}</span>
-      <span style={statStyles.label}>{label}</span>
-    </div>
-  );
+  return <>{val.toLocaleString()}{suffix}</>;
 }
 
-const statStyles = {
-  item: {
-    display: 'flex',
-    flexDirection: 'column' as const,
-    gap: '4px',
-  },
-  value: {
-    fontSize: 'clamp(1.5rem, 3vw, 2rem)',
-    fontWeight: 600,
-    color: 'var(--accent-600)',
-    letterSpacing: '-0.02em',
-    fontFamily: 'var(--font-display)',
-  },
-  label: {
-    fontSize: '0.65rem',
-    fontWeight: 500,
-    letterSpacing: '0.1em',
-    textTransform: 'uppercase' as const,
-    color: 'rgba(250,250,250,0.45)',
-  },
+const stats = [
+  { value: 480, suffix: 'B+', label: 'Trade Volume (USD)', prefix: '$' },
+  { value: 850, suffix: '+', label: 'Global Partners', prefix: '' },
+  { value: 12, suffix: 'M+', label: 'Shipments / Year', prefix: '' },
+  { value: 30, suffix: '+', label: 'Years Operating', prefix: '' },
+];
+
+const stagger = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.72 } },
 };
 
 export default function Hero() {
-  const [ready, setReady] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const t = setTimeout(() => setReady(true), 200);
-    return () => clearTimeout(t);
+    // Delay hero reveal so it appears after the cinematic intro
+    const id = setTimeout(() => setVisible(true), 200);
+    return () => clearTimeout(id);
   }, []);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.12, delayChildren: 0.3 },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 28 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.7 } },
-  };
-
   return (
-    <section style={styles.section}>
-      {/* Full-screen globe background */}
-      <Globe fullscreen />
+    <section style={s.section}>
+      {/* Full-viewport Globe */}
+      <Globe />
 
-      {/* Dark gradient overlay so text is readable */}
-      <div style={styles.overlay} />
+      {/* Gradient overlay: strong left for copy, fades right for globe visibility */}
+      <div style={s.overlay} />
 
-      {/* Hero content */}
+      {/* Copy */}
       <motion.div
-        style={styles.content}
-        variants={containerVariants}
+        style={s.copy}
+        variants={stagger}
         initial="hidden"
-        animate={ready ? 'visible' : 'hidden'}
+        animate={visible ? 'show' : 'hidden'}
       >
-        {/* Eyebrow */}
-        <motion.p style={styles.eyebrow} variants={itemVariants}>
+        <motion.p variants={fadeUp} style={s.eyebrow}>
           EST. 1998 &nbsp;·&nbsp; NEW YORK &nbsp;·&nbsp; LONDON &nbsp;·&nbsp; SINGAPORE &nbsp;·&nbsp; DOHA
         </motion.p>
 
-        {/* Headline */}
-        <motion.h1 style={styles.headline} variants={itemVariants}>
+        <motion.h1 variants={fadeUp} style={s.h1}>
           The Global Standard<br />
-          in <span style={styles.accent}>Trade & Capital</span>
+          in <em style={s.accent}>Trade & Capital</em>
         </motion.h1>
 
-        {/* Description */}
-        <motion.p style={styles.description} variants={itemVariants}>
+        <motion.p variants={fadeUp} style={s.descriptor}>
           From commodity finance to cross-border logistics, GGC connects enterprise
           with the world's most critical trade corridors — across 150 countries
           and six decades of combined expertise.
         </motion.p>
 
-        {/* CTA Buttons */}
-        <motion.div style={styles.buttons} variants={itemVariants}>
-          <Link href="/contact" style={styles.btnAccent}>
+        <motion.div variants={fadeUp} style={s.buttons}>
+          <Link href="/contact" style={s.btnPrimary}>
             Schedule a Consultation
           </Link>
-          <Link href="/services" style={styles.btnOutline}>
-            Explore Services
+          <Link href="/services" style={s.btnGhost}>
+            Explore Services <span style={{ marginLeft: '4px' }}>→</span>
           </Link>
         </motion.div>
 
-        {/* Stats bar */}
-        <motion.div style={styles.statsBar} variants={itemVariants}>
-          <div style={styles.statsDivider} />
-          <div style={styles.statsGrid}>
-            <AnimatedStat value="$480B+" label="Annual Trade Volume" />
-            <AnimatedStat value="850+" label="Global Partners" />
-            <AnimatedStat value="12M+" label="Shipments Handled" />
-            <AnimatedStat value="30+" label="Years Operating" />
+        {/* Stats */}
+        <motion.div variants={fadeUp} style={s.statsWrap}>
+          <div style={s.statsDivider} />
+          <div style={s.statsRow}>
+            {stats.map((st) => (
+              <div key={st.label} style={s.stat}>
+                <span style={s.statNum}>
+                  {st.prefix}<Counter to={st.value} suffix={st.suffix} />
+                </span>
+                <span style={s.statLabel}>{st.label}</span>
+              </div>
+            ))}
           </div>
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
+      {/* Scroll cue */}
       <motion.div
-        style={styles.scrollIndicator}
+        style={s.scrollCue}
         initial={{ opacity: 0 }}
-        animate={{ opacity: ready ? 1 : 0 }}
-        transition={{ delay: 1.8 }}
+        animate={{ opacity: visible ? 1 : 0 }}
+        transition={{ delay: 1.6 }}
       >
         <motion.div
-          style={styles.scrollDot}
-          animate={{ y: [0, 8, 0] }}
-          transition={{ repeat: Infinity, duration: 1.4, ease: 'easeInOut' }}
+          style={s.scrollLine}
+          animate={{ scaleY: [1, 0.3, 1] }}
+          transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
         />
       </motion.div>
     </section>
   );
 }
 
-const styles = {
+const s: Record<string, React.CSSProperties> = {
   section: {
-    position: 'relative' as const,
+    position: 'relative',
     minHeight: '100vh',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-start',
     overflow: 'hidden',
-    background: 'var(--bg-primary)',
-  } as React.CSSProperties,
-
+    background: '#07102a',
+  },
   overlay: {
-    position: 'absolute' as const,
+    position: 'absolute',
     inset: 0,
     background:
-      'linear-gradient(105deg, rgba(11,20,55,0.92) 0%, rgba(11,20,55,0.75) 50%, rgba(11,20,55,0.3) 100%)',
+      'linear-gradient(100deg, rgba(7,16,42,0.96) 0%, rgba(7,16,42,0.78) 45%, rgba(7,16,42,0.15) 100%)',
     zIndex: 1,
-  } as React.CSSProperties,
-
-  content: {
-    position: 'relative' as const,
+  },
+  copy: {
+    position: 'relative',
     zIndex: 2,
-    maxWidth: '680px',
-    padding: 'var(--s-20) clamp(var(--s-6), 6vw, var(--s-24))',
-  } as React.CSSProperties,
-
+    maxWidth: '640px',
+    padding: 'calc(var(--s-24) + 80px) clamp(1.5rem, 7vw, 6rem) var(--s-24)',
+  },
   eyebrow: {
-    fontSize: '0.6rem',
+    fontSize: '0.58rem',
     fontWeight: 600,
-    letterSpacing: '0.18em',
-    textTransform: 'uppercase' as const,
-    color: 'var(--accent-600)',
-    marginBottom: 'var(--s-6)',
-    fontFamily: 'var(--font-mono)',
-  } as React.CSSProperties,
-
-  headline: {
-    fontSize: 'clamp(2.4rem, 5.5vw, 3.8rem)',
+    letterSpacing: '0.2em',
+    textTransform: 'uppercase',
+    color: 'rgba(56,189,248,0.8)',
+    fontFamily: "'Montserrat', sans-serif",
+    marginBottom: '1.5rem',
+  },
+  h1: {
+    fontSize: 'clamp(2.2rem, 5vw, 3.6rem)',
     fontWeight: 600,
     letterSpacing: '-0.03em',
-    lineHeight: 1.12,
-    color: 'var(--ivory-100)',
-    marginBottom: 'var(--s-6)',
-    fontFamily: 'var(--font-display)',
-  } as React.CSSProperties,
-
+    lineHeight: 1.1,
+    color: '#FAFAFA',
+    marginBottom: '1.5rem',
+    fontFamily: "'Montserrat', sans-serif",
+    fontStyle: 'normal',
+  },
   accent: {
-    color: 'var(--accent-600)',
-  } as React.CSSProperties,
-
-  description: {
-    fontSize: '1rem',
+    color: '#38BDF8',
+    fontStyle: 'normal',
+  },
+  descriptor: {
+    fontSize: '0.9375rem',
     fontWeight: 400,
-    lineHeight: 1.7,
-    color: 'rgba(250,250,250,0.6)',
+    lineHeight: 1.75,
+    color: 'rgba(250,250,250,0.52)',
     maxWidth: '520px',
-    marginBottom: 'var(--s-10)',
-  } as React.CSSProperties,
-
+    marginBottom: '2.5rem',
+  },
   buttons: {
     display: 'flex',
-    gap: 'var(--s-4)',
-    flexWrap: 'wrap' as const,
-    marginBottom: 'var(--s-12)',
-  } as React.CSSProperties,
-
-  btnAccent: {
+    gap: '1rem',
+    flexWrap: 'wrap',
+    marginBottom: '3rem',
+    alignItems: 'center',
+  },
+  btnPrimary: {
     display: 'inline-flex',
     alignItems: 'center',
-    padding: '0.75rem 1.75rem',
-    background: 'var(--accent-600)',
-    color: 'var(--ink-900)',
+    padding: '0.8rem 1.875rem',
+    background: '#38BDF8',
+    color: '#0B1437',
     borderRadius: '6px',
     fontSize: '0.875rem',
-    fontWeight: 600,
+    fontWeight: 700,
     letterSpacing: '0.01em',
     textDecoration: 'none',
-    fontFamily: 'var(--font-display)',
-    transition: 'opacity 0.15s ease',
-  } as React.CSSProperties,
-
-  btnOutline: {
+    fontFamily: "'Montserrat', sans-serif",
+    transition: 'background 0.18s ease, transform 0.15s ease',
+  },
+  btnGhost: {
     display: 'inline-flex',
     alignItems: 'center',
-    padding: '0.75rem 1.75rem',
+    padding: '0.8rem 1.875rem',
     background: 'transparent',
-    color: 'var(--ivory-100)',
-    border: '1px solid rgba(250,250,250,0.2)',
+    color: 'rgba(250,250,250,0.7)',
+    border: '1px solid rgba(250,250,250,0.15)',
     borderRadius: '6px',
     fontSize: '0.875rem',
     fontWeight: 500,
     letterSpacing: '0.01em',
     textDecoration: 'none',
-    fontFamily: 'var(--font-display)',
-    transition: 'border-color 0.15s ease, background 0.15s ease',
-  } as React.CSSProperties,
-
-  statsBar: {
+    fontFamily: "'Montserrat', sans-serif",
+    transition: 'border-color 0.18s ease, color 0.18s ease',
+  },
+  statsWrap: {
     display: 'flex',
-    flexDirection: 'column' as const,
-    gap: 'var(--s-5)',
-  } as React.CSSProperties,
-
+    flexDirection: 'column',
+    gap: '1.25rem',
+  },
   statsDivider: {
     height: '1px',
-    background: 'rgba(250,250,250,0.1)',
-    width: '100%',
-  } as React.CSSProperties,
-
-  statsGrid: {
+    background: 'rgba(250,250,250,0.08)',
+  },
+  statsRow: {
     display: 'grid',
     gridTemplateColumns: 'repeat(4, auto)',
-    gap: 'var(--s-8)',
+    gap: '2.5rem',
     justifyContent: 'start',
-  } as React.CSSProperties,
-
-  scrollIndicator: {
-    position: 'absolute' as const,
-    bottom: 'var(--s-8)',
+  },
+  stat: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '0.3rem',
+  },
+  statNum: {
+    fontSize: 'clamp(1.25rem, 2.5vw, 1.75rem)',
+    fontWeight: 600,
+    color: '#38BDF8',
+    letterSpacing: '-0.025em',
+    fontFamily: "'Montserrat', sans-serif",
+  },
+  statLabel: {
+    fontSize: '0.6rem',
+    fontWeight: 500,
+    letterSpacing: '0.1em',
+    textTransform: 'uppercase',
+    color: 'rgba(250,250,250,0.35)',
+  },
+  scrollCue: {
+    position: 'absolute',
+    bottom: '2.5rem',
     left: '50%',
     transform: 'translateX(-50%)',
     zIndex: 2,
     display: 'flex',
-    flexDirection: 'column' as const,
+    flexDirection: 'column',
     alignItems: 'center',
-    gap: 'var(--s-2)',
-  } as React.CSSProperties,
-
-  scrollDot: {
+  },
+  scrollLine: {
     width: '1px',
-    height: '48px',
-    background: 'linear-gradient(to bottom, transparent, var(--accent-600))',
-  } as React.CSSProperties,
+    height: '52px',
+    background: 'linear-gradient(to bottom, transparent, #38BDF8)',
+    transformOrigin: 'top',
+  },
 };

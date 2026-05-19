@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import '../app/navbar.css';
 
 const navLinks = [
@@ -13,68 +13,77 @@ const navLinks = [
   { label: 'Contact', href: '/contact' },
 ];
 
+const drawerVariants = {
+  closed: { height: 0, opacity: 0 },
+  open: { height: 'auto', opacity: 1, transition: { duration: 0.28 } },
+};
+
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   return (
-    <div className="navbar-wrapper">
-      {/* Top bar: logo + CTA */}
-      <nav className="navbar">
-        <Link href="/" className="navbar-logo">
-          <Image
-            src="/logo.jpeg"
-            alt="Global Group Corp."
-            width={200}
-            height={60}
-            priority
-          />
+    <div className={`nav-root ${scrolled ? 'nav-solid' : 'nav-transparent'}`}>
+      {/* Top bar */}
+      <div className="nav-bar">
+        <Link href="/" className="nav-logo">
+          <Image src="/logo.jpeg" alt="Global Group Corp." width={260} height={80} priority />
         </Link>
 
-        <Link href="/contact" className="navbar-cta navbar-cta-desktop">
-          Get in Touch
-        </Link>
+        <Link href="/contact" className="nav-cta">Get in Touch</Link>
 
         <button
-          className="navbar-mobile-button"
-          onClick={() => setIsOpen(!isOpen)}
+          className={`nav-hamburger ${open ? 'open' : ''}`}
+          onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
         >
-          {isOpen ? <X size={22} /> : <Menu size={22} />}
+          <span /><span /><span />
         </button>
-      </nav>
+      </div>
 
       {/* Desktop nav strip */}
-      <div className="navbar-desktop">
-        {navLinks.map((link) => (
-          <Link key={link.href} href={link.href} className="navbar-link">
-            {link.label}
-          </Link>
+      <div className="nav-strip">
+        {navLinks.map((l) => (
+          <Link key={l.href} href={l.href} className="nav-link">{l.label}</Link>
         ))}
       </div>
 
-      {/* Mobile nav */}
-      {isOpen && (
-        <div className="navbar-mobile">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="navbar-mobile-link"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </Link>
-          ))}
-          <Link
-            href="/contact"
-            className="navbar-mobile-link"
-            style={{ color: 'var(--accent-600)', fontWeight: 600, border: 'none' }}
-            onClick={() => setIsOpen(false)}
+      {/* Mobile drawer */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            className="nav-drawer"
+            variants={drawerVariants}
+            initial="closed"
+            animate="open"
+            exit="closed"
           >
-            Get in Touch →
-          </Link>
-        </div>
-      )}
+            {navLinks.map((l, i) => (
+              <motion.div
+                key={l.href}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.06 }}
+              >
+                <Link href={l.href} className="nav-drawer-link" onClick={() => setOpen(false)}>
+                  {l.label}
+                </Link>
+              </motion.div>
+            ))}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.24 }}>
+              <Link href="/contact" className="nav-cta" style={{ display: 'inline-block', marginTop: '0.75rem' }} onClick={() => setOpen(false)}>
+                Get in Touch
+              </Link>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
