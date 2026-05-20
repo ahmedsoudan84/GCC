@@ -1,7 +1,6 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
 import CinematicIntro from '@/components/CinematicIntro';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/sections/Hero';
@@ -12,25 +11,21 @@ import Team from '@/components/sections/Team';
 import Footer from '@/components/Footer';
 
 export default function Home() {
-  const [introComplete, setIntroComplete] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
 
-  const handleIntroComplete = useCallback(() => setIntroComplete(true), []);
+  const handleIntroComplete = useCallback(() => setShowIntro(false), []);
 
-  // Safety escape — never let the intro block the site for more than 5s
+  // Hard safety escape — intro can never block site for more than 5s
   useEffect(() => {
-    const id = setTimeout(() => setIntroComplete(true), 5000);
+    const id = setTimeout(() => setShowIntro(false), 5000);
     return () => clearTimeout(id);
   }, []);
 
   return (
     <>
-      <AnimatePresence>
-        {!introComplete && (
-          <CinematicIntro onComplete={handleIntroComplete} />
-        )}
-      </AnimatePresence>
+      {showIntro && <CinematicIntro onComplete={handleIntroComplete} />}
 
-      <main style={{ opacity: introComplete ? 1 : 0, transition: 'opacity 0.6s ease' }}>
+      <main>
         <Navbar />
         <Hero />
         <Services />

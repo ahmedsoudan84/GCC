@@ -239,13 +239,16 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
 
     frameId = requestAnimationFrame(animate);
 
-    // Phase timeline
+    // Phase timeline — exit triggers the fade-out animation,
+    // onComplete is called by onAnimationComplete after fade finishes
     const t1 = setTimeout(() => setPhase('logo'), 1400);
-    const t2 = setTimeout(() => setPhase('exit'), 3000);
-    const t3 = setTimeout(() => {
+    const t2 = setTimeout(() => {
+      setPhase('exit');
       cancelAnimationFrame(frameId);
-      onCompleteRef.current();
-    }, 3800);
+    }, 3000);
+
+    // Hard fallback: if animation callback never fires, force complete at 4.5s
+    const t3 = setTimeout(() => onCompleteRef.current(), 4500);
 
     return () => {
       cancelAnimationFrame(frameId);
@@ -260,7 +263,10 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
       style={styles.overlay}
       initial={{ opacity: 1 }}
       animate={{ opacity: phase === 'exit' ? 0 : 1 }}
-      transition={{ duration: 0.8, ease: 'easeInOut' }}
+      transition={{ duration: 0.7, ease: 'easeInOut' }}
+      onAnimationComplete={() => {
+        if (phase === 'exit') onCompleteRef.current();
+      }}
     >
       <canvas ref={canvasRef} style={styles.canvas} />
 
