@@ -37,7 +37,7 @@ const services = [
     description:
       'Our Capital Markets division advises on debt structuring, cross-border M&A, and project finance for mid-market and large-cap companies with international operations. We bridge institutional investors to high-yield trade-related assets with proven risk profiles.',
     capabilities: ['Debt Structuring & Placement', 'Cross-Border M&A Advisory', 'Project Finance', 'Trade-Related Bond Issuance', 'Private Equity Co-investment', 'Structured Trade Products'],
-    image: 'https://images.unsplash.com/photo-1642790551116-18e4f4afc0fd?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
     stat: '$120B+',
     statLabel: 'Capital arranged',
   },
@@ -103,7 +103,7 @@ export default function ServicesPage() {
             that operate at the intersection of trade, logistics, and capital.
           </p>
           <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-            Discuss Your Requirements <span className="arrow">→</span>
+            Discuss Your Requirements <span className="arrow" />
           </Link>
         </motion.div>
       </div>
@@ -122,14 +122,8 @@ export default function ServicesPage() {
                 whileInView="visible"
                 viewport={{ once: true, margin: '-60px' }}
                 variants={item}
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr 1fr',
-                  gap: '4rem',
-                  alignItems: 'center',
-                  marginBottom: '6rem',
-                  direction: isEven ? 'ltr' : 'rtl',
-                }}
+                className="service-item-layout"
+                style={{ direction: isEven ? 'ltr' : 'rtl' }}
               >
                 {/* Image */}
                 <div style={{ direction: 'ltr', position: 'relative', borderRadius: '16px', overflow: 'hidden', aspectRatio: '4/3', boxShadow: '8px 8px 24px #070e28, -8px -8px 24px #0f1a46' }}>
@@ -200,7 +194,7 @@ export default function ServicesPage() {
           </p>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link href="/contact" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
-              Schedule a Consultation <span className="arrow">→</span>
+              Schedule a Consultation <span className="arrow" />
             </Link>
             <Link href="/team" className="ggc-btn on-dark" style={{ textDecoration: 'none' }}>
               Meet the Team

@@ -23,14 +23,16 @@ const testimonials = [
   },
 ];
 
+const E = [0.22, 1, 0.36, 1] as const;
+
 const containerVariants = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.15 } },
+  visible: { transition: { staggerChildren: 0.08 } },
 };
 
 const cardVariants = {
   hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: E } },
 };
 
 export default function Testimonials() {
@@ -41,8 +43,8 @@ export default function Testimonials() {
           style={{ marginBottom: '3.5rem', textAlign: 'center' }}
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.6, ease: E }}
         >
           <p className="section-eyebrow">Client Voices</p>
           <h2 className="section-headline" style={{ maxWidth: '600px', margin: '0 auto 1rem' }}>
@@ -64,16 +66,16 @@ export default function Testimonials() {
               variants={cardVariants}
               className="neu-card"
               style={{ position: 'relative', paddingTop: '2rem' }}
-              whileHover={{ y: -4, transition: { duration: 0.25 } }}
+              whileHover={{ y: -3, transition: { duration: 0.2, ease: 'easeOut' } }}
             >
               {/* Quote mark */}
               <span style={{
                 position: 'absolute',
                 top: '1.25rem',
                 left: '1.5rem',
-                fontSize: '3rem',
+                fontSize: '4rem',
                 lineHeight: 1,
-                color: 'rgba(56,189,248,0.2)',
+                color: 'rgba(56,189,248,0.18)',
                 fontFamily: 'Georgia, serif',
                 fontWeight: 700,
                 pointerEvents: 'none',
@@ -81,14 +83,14 @@ export default function Testimonials() {
                 "
               </span>
 
-              <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: 'rgba(250,250,250,0.6)', marginBottom: '1.75rem', paddingTop: '1rem', fontStyle: 'italic' }}>
+              <p style={{ fontSize: '0.9375rem', lineHeight: 1.75, color: 'rgba(250,250,250,0.6)', marginBottom: '1.75rem', paddingTop: '1rem' }}>
                 {t.quote}
               </p>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.875rem', borderTop: '1px solid rgba(83,97,232,0.15)', paddingTop: '1.25rem' }}>
                 <div style={{
-                  width: '36px',
-                  height: '36px',
+                  width: '40px',
+                  height: '40px',
                   borderRadius: '50%',
                   background: 'rgba(56,189,248,0.12)',
                   display: 'flex',
