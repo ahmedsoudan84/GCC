@@ -11,6 +11,8 @@ interface CinematicIntroProps {
 export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [phase, setPhase] = useState<'globe' | 'logo' | 'exit'>('globe');
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -242,7 +244,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
     const t2 = setTimeout(() => setPhase('exit'), 3000);
     const t3 = setTimeout(() => {
       cancelAnimationFrame(frameId);
-      onComplete();
+      onCompleteRef.current();
     }, 3800);
 
     return () => {
@@ -251,7 +253,7 @@ export default function CinematicIntro({ onComplete }: CinematicIntroProps) {
       clearTimeout(t2);
       clearTimeout(t3);
     };
-  }, [onComplete]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <motion.div
